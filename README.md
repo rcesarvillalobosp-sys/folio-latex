@@ -1,8 +1,8 @@
-# TeXLocal
+# Folio
 
-Editor LaTeX en el navegador, al estilo Overleaf, que **compila todo en tu PC**. Sin cuentas, sin límites de tiempo de compilación, sin servidores externos.
+Editor LaTeX en el navegador que **compila todo en tu PC**. Sin cuentas, sin límites de tiempo de compilación, sin servidores externos.
 
-**Documento de presentación (PDF):** [docs/TeXLocal.pdf](docs/TeXLocal.pdf)
+**Documento de presentación (PDF):** [docs/Folio.pdf](docs/Folio.pdf)
 
 ## Requisitos
 

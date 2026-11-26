@@ -55,7 +55,7 @@ async function loadEngines(refresh) {
 async function showHome() {
   S.project = null;
   $('#editor').classList.add('hidden'); $('#home').classList.remove('hidden');
-  document.title = 'TeXLocal';
+  document.title = 'Folio';
   loadEngines().catch(() => {});
   const list = await api('GET', '/api/projects');
   const tb = $('#projectList');
@@ -96,7 +96,7 @@ async function openProject(name) {
   await flushAll();
   S.project = name; S.docs.clear(); S.current = null; S.lastIssues = [];
   $('#home').classList.add('hidden'); $('#editor').classList.remove('hidden');
-  $('#projName').textContent = name; document.title = name + ' — TeXLocal';
+  $('#projName').textContent = name; document.title = name + ' — Folio';
   if (!cm) initEditor();
   await loadEngines().catch(() => {});
   const r = await api('GET', P());

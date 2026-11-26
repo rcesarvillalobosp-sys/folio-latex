@@ -1,4 +1,4 @@
-// TeXLocal — editor LaTeX local (sin dependencias externas de Node)
+// Folio — editor LaTeX local (sin dependencias externas de Node)
 // Ejecuta: node server.js   y abre http://localhost:3210
 'use strict';
 const http = require('http');
@@ -308,7 +308,7 @@ function run(cmd, args, cwd, extraEnv = {}) {
   return new Promise(resolve => {
     let out = '';
     const child = spawn(cmd, args, { cwd, env: { ...ENV, ...extraEnv }, windowsHide: true });
-    const timer = setTimeout(() => { out += '\n[TeXLocal] Tiempo de compilación agotado; proceso detenido.\n'; child.kill('SIGKILL'); }, COMPILE_TIMEOUT_MS);
+    const timer = setTimeout(() => { out += '\n[Folio] Tiempo de compilación agotado; proceso detenido.\n'; child.kill('SIGKILL'); }, COMPILE_TIMEOUT_MS);
     child.stdout.on('data', d => out += d);
     child.stderr.on('data', d => out += d);
     child.stdin.end(); // nunca esperar entrada interactiva
@@ -596,7 +596,7 @@ http.createServer((req, res) => {
     if (!(e.code >= 400 && e.code < 600)) console.error(e);
   });
 }).listen(PORT, HOST, () => {
-  console.log(`\n  TeXLocal listo en  http://localhost:${PORT}`);
+  console.log(`\n  Folio listo en  http://localhost:${PORT}`);
   console.log(`  Proyectos en:      ${PROJECTS}`);
   const e = Object.keys(ENGINES);
   console.log(`  Motores LaTeX:     ${e.length ? e.join(', ') : 'NINGUNO — instala MiKTeX o TeX Live (ver README.md)'}\n`);

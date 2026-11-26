@@ -1,7 +1,7 @@
 {
-  "name": "texlocal",
+  "name": "folio",
   "version": "1.0.0",
-  "description": "Editor LaTeX local tipo Overleaf: compila en tu propia máquina",
+  "description": "Folio: editor LaTeX en el navegador que compila en la propia máquina",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
