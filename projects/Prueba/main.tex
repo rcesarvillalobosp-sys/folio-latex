@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Paquetes ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{hyperref}
+\usepackage[spanish,capitalise]{cleveref}
+
+\graphicspath{{figuras/}}
+
+\title{Prueba}
+\author{Tu nombre}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\input{secciones/introduccion}
+\input{secciones/resultados}
+
+% ---------- Bibliografía ----------
+\bibliographystyle{plainnat}
+\bibliography{referencias}
+
+\end{document}

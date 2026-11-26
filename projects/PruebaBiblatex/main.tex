@@ -1,0 +1,4908 @@
+\documentclass[12pt]{article}
+
+% Codificación y lenguaje
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+% Matemáticas y gráficos
+\usepackage{amsmath, amssymb}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=1.17}
+
+\usepackage{tikz}
+
+% Estilo
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=3cm,bottom=3cm}
+
+\usepackage{titling}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\tcbuselibrary{listingsutf8, breakable}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+
+
+
+% Código Python
+\usepackage{listings}
+\definecolor{codegray}{rgb}{0.95,0.95,0.95}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{myblue}{rgb}{0.1,0.1,0.8}
+\lstdefinestyle{mypython}{
+    backgroundcolor=\color{codegray},
+    commentstyle=\color{mygreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{red},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    numbers=left,
+    numbersep=5pt,
+    showstringspaces=false,
+    language=Python,
+    frame=single,
+}
+
+% Portada personalizada
+\newcommand{\customtitle}{
+    \begin{titlepage}
+    \newgeometry{margin=0cm, paperwidth=21cm, paperheight=29.7cm}
+        \centering
+        \vspace*{1.3cm} 
+        {\fontsize{22}{24}\selectfont\textbf{UNIVERSIDAD NACIONAL DE SAN AGUSTÍN DE AREQUIPA} \par}
+
+        \vspace{0.5cm}
+
+        {\fontsize{18}{21}\selectfont\textbf{FACULTAD DE INGENIERÍA DE PROCESOS} \par}
+        {\fontsize{18}{21}\selectfont\textbf{ESCUELA PROFESIONAL DE INGENIERÍA DE INDUSTRIAS ALIMENTARIAS} \par}
+
+        \vspace{1cm}
+        \includegraphics[width=4cm]{unsa-logo.png} 
+        \vspace{1cm}
+
+        \begin{tikzpicture}
+            \fill[blue!40!cyan] (0, 0) rectangle (\linewidth, 3cm);
+            \node[white, anchor=center] at (\linewidth/2, 2cm) {\LARGE\textbf{Curso: MÉTODOS NUMÉRICOS}};
+            \node[white, anchor=center, text width=\linewidth-2cm] at (\linewidth/1.24, 1cm) {\Large\textbf{\mbox{Trabajo de Evaluación Continua}}};
+        \end{tikzpicture}
+        \vspace{1cm}
+       
+        {\Large Docente: Calapuja Sambrano Bidder Sabino} 
+        \vspace{0.8cm} 
+        {\Large \textbf{Grupo 5:}}
+
+        \begin{center} 
+          {\large Geronimo Sonco, Madai \\ Rojas Espinoza, Nicol Sharon \\
+          Salco Caíra, Yuvica Marcela \\ Salcedo Cahui, Micaela Damaris \\
+          Vilca Salas, Susan}
+        \end{center}
+        
+        \vspace{1.5cm}
+        {\Large\textbf{Arequipa - Perú} \par}
+        {\Large\textbf{2025 - A} \par}
+    \end{titlepage}
+    \restoregeometry
+}
+
+\begin{document}
+
+% Insertar la portada
+\customtitle 
+
+
+
+\section*{Ejercicio 1: Método de la Bisección}
+
+Queremos resolver la ecuación:
+\[
+\ln(x) - x + 2 = 0
+\]
+usando el método de la bisección.\par
+
+Definimos la función:
+\[
+    f(x) = \ln(x) - x + 2
+\]
+
+Buscamos un intervalo \([a, b]\) tal que \(f(a) \cdot f(b) < 0\):
+\begin{align*}
+    f(3) &= \ln(3) - 3 + 2 \approx 0.0986 \\
+    f(4) &= \ln(4) - 4 + 2 \approx -0.6137
+\end{align*}
+
+Como \(f(3) > 0\) y \(f(4) < 0\), la raíz está en \([3, 4]\).
+
+\bigskip
+Resumen de iteraciones:
+\begin{itemize}
+    \item \(c_1 = 3.5, \quad f(c_1) \approx -0.2472\)
+    \item \(c_2 = 3.25, \quad f(c_2) \approx -0.0713\)
+    \item \(c_3 = 3.125, \quad f(c_3) \approx 0.0144\)
+    \item \(c_4 = 3.1875, \quad f(c_4) \approx -0.0284\)
+    \item \(c_5 = 3.15625, \quad f(c_5) \approx -0.0070\)
+    \item \(c_6 = 3.140625, \quad f(c_6) \approx 0.0037\)
+    \item \(c_7 = 3.1484375, \quad f(c_7) \approx -0.0017\)
+    \item \(c_8 = 3.14453125, \quad f(c_8) \approx 0.0010\)
+\end{itemize}
+
+\noindent\textbf{Raíz aproximada:} \(x \approx 3.146\)
+
+\bigskip
+\textbf{Gráfica de la función:}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    domain=2:5, samples=200,
+    axis lines=middle,
+    xlabel={$x$}, ylabel={$f(x)$},
+    width=12cm, height=7cm,
+    grid=both,
+    xtick={2,3,3.146,4,5},
+    xticklabels={$2$, $3$, $\approx 3.146$, $4$, $5$},
+    ytick={-1,0,1,2}
+  ]
+  \addplot [blue, thick] {ln(x) - x + 2};
+  \addplot[red, mark=*, only marks] coordinates {(3.146, 0)};
+  \node at (axis cs:3.146,0.3) [anchor=south west, red] {Raíz};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+%-------------------
+\section*{Ejercicio 2: Método de la Secante (I)}
+
+Queremos resolver:
+\[
+    f(x) = \frac{1}{x} - \tan(x) = 0, \quad x \in (0, \frac{\pi}{2})
+\]
+
+Puntos iniciales:
+\begin{align*}
+    x_0 &= 0.5, & f(x_0) &\approx 1.4537 > 0 \\
+    x_1 &= 1.0, & f(x_1) &\approx -0.5574 < 0
+\end{align*}
+
+Iteraciones:
+\begin{align*}
+    x_2 &= 0.8614, & f(x_2) &\approx 0.003 \\
+    x_3 &= 0.8621, & f(x_3) &\approx 0.0001 \\
+    x_4 &= 0.862124, & f(x_4) &\approx 0.000001 \\
+    x_5 &= 0.86212424, & \text{convergencia con } |x_5 - x_4| < 10^{-6}
+\end{align*}
+
+\noindent\textbf{Solución aproximada:} \(\boxed{x \approx 0.8621}\)
+
+\bigskip
+\textbf{Gráfica de la función:}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    domain=0.1:1.5,
+    samples=200,
+    axis lines=middle,
+    xlabel={$x$}, ylabel={$f(x)$},
+    xtick={0.5,0.8621,1.0,1.5708},
+    xticklabels={$0.5$, $\approx 0.8621$, $1.0$, $\frac{\pi}{2}$},
+    width=12cm, height=8cm,
+    grid=both
+  ]
+  \addplot[blue, thick] {1/x - tan(deg(x))};
+  \addplot[red, only marks, mark=*] coordinates {(0.8621,0)};
+  \node at (axis cs:0.8621,0.5) [anchor=south west, red] {Raíz aproximada};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+%-------------------
+\section*{Ejercicio 3: Método del Punto Fijo}
+
+Queremos resolver:
+\[
+    f(x) = -0.9x^2 + 1.7x + 2.5 = 0
+\]
+
+Reescribimos como:
+\[
+    x = g(x) = \sqrt{\frac{1.7x + 2.5}{0.9}}
+\]
+
+Con valor inicial \(x_0 = 5.20\), obtenemos:
+\[
+\begin{array}{c|c|c}
+    n & x_n & |x_n - x_{n-1}| \\ \hline
+    0 & 5.2000 & - \\
+    1 & 3.5500 & 1.6500 \\
+    2 & 3.0800 & 0.4700 \\
+    3 & 2.9300 & 0.1500 \\
+    4 & 2.8800 & 0.0500 \\
+    5 & 2.8700 & 0.0100 \\
+    6 & 2.8630 & 0.0070 \\
+    7 & 2.8610 & 0.0020 \\
+    8 & 2.8600 & 0.0010 \\
+    9 & 2.8600 & 0.0000 \\
+\end{array}
+\]
+
+\bigskip
+\textbf{Gráfica de \(f(x)\), \(g(x)\) y \(y = x\):}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    domain=0:6,
+    samples=200,
+    axis lines=middle,
+    xlabel=$x$, ylabel=$y$,
+    legend pos=outer north east,
+    grid=both,
+    width=12cm, height=8cm,
+    ymin=-5, ymax=5
+  ]
+  \addplot [blue, thick] {-0.9*x^2 + 1.7*x + 2.5};
+  \addlegendentry{$f(x)$}
+
+  \addplot [red, thick, domain=0:6] {sqrt((1.7*x + 2.5)/0.9)};
+  \addlegendentry{$g(x)$}
+
+  \addplot [gray, dashed] {x};
+  \addlegendentry{$y=x$}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+%-------------------
+\section*{Ejercicio 4: Método de la Secante (II)}
+
+Queremos resolver:
+\[
+    f(x) = e^x + x^3 - 4 = 0
+\]
+
+Valores iniciales:
+\begin{align*}
+    x_0 &= 1.0, & f(x_0) &\approx -0.282 \\
+    x_1 &= 1.5, & f(x_1) &\approx 3.8567
+\end{align*}
+
+Iteraciones:
+\begin{align*}
+    x_2 &= 1.034, & f(x_2) &\approx -0.083 \\
+    x_3 &= 1.044, & f(x_3) &\approx -0.021 \\
+    x_4 &= 1.0474, & f(x_4) &\approx -0.007
+\end{align*}
+
+\noindent\textbf{Raíz aproximada:} \(x \approx 1.047\)
+
+\bigskip
+\textbf{Gráfica de la función:}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    domain=0:2,
+    samples=100,
+    axis lines=middle,
+    xlabel=$x$, ylabel=$f(x)$,
+    ymin=-2, ymax=6,
+    xtick={0,1,1.047,1.5,2},
+    xticklabels={$0$,$1$,$\approx 1.05$,$1.5$,$2$},
+    ytick={0},
+    grid=both,
+    width=12cm, height=8cm
+  ]
+  \addplot[blue, thick] {exp(x) + x^3 - 4};
+  \addplot[red, only marks, mark=*] coordinates {(1.047,0)};
+  \node at (axis cs:1.047,0.5) [anchor=south west, red] {Raíz aproximada};
+  \addplot[black, dashed] coordinates {(1.047,-2) (1.047,6)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+
+
+
+
+%-------------------------------------------------------
+
+
+
+
+
+
+
+
+\section*{EJERCICIO 5}
+
+\subsection*{Respuesta}
+
+\textbf{La respuesta es:} \( \boxed{6} \)
+
+\textbf{ 1: Identificar la función y sus parámetros.}
+
+La función se define como \( \text{pro}(a, b) \), donde:
+
+\[
+a = 18,\quad b = 24
+\]
+
+Queremos encontrar el valor final de \( y \) después de ejecutar la función.
+
+\textbf{ 2: Inicializar los valores.}
+
+Comenzamos con:
+
+\[
+a = 18,\quad b = 24
+\]
+
+\textbf{ 3: Verificar la condición del bucle \texttt{while}.}
+
+La condición del bucle es: \( \text{rem}(a, b) \neq 0 \).  
+Calculamos: \( \text{rem}(18, 24) = 18 \) (porque \( 18 < 24 \)).  
+Como \( 18 \neq 0 \), entramos al bucle.
+
+\textbf{ 4: Ejecutar el bucle (primera iteración).}
+
+\[
+\begin{aligned}
+t &= a = 18 \\
+a &= b = 24 \\
+b &= \text{rem}(t, b) = \text{rem}(18, 24) = 18
+\end{aligned}
+\]
+
+\textbf{ 5: Verificar la condición nuevamente.}
+
+\[
+\text{rem}(24, 18) = 6 \neq 0 \Rightarrow \text{se sigue en el bucle}
+\]
+
+\textbf{ 6: Ejecutar el bucle (segunda iteración).}
+
+\[
+\begin{aligned}
+t &= a = 24 \\
+a &= b = 18 \\
+b &= \text{rem}(t, b) = \text{rem}(24, 18) = 6
+\end{aligned}
+\]
+
+\textbf{ 7: Verificar la condición nuevamente.}
+
+\[
+\text{rem}(18, 6) = 0 \Rightarrow \text{salimos del bucle}
+\]
+
+\textbf{ 8: Asignar el valor final.}
+
+\[
+y = b = \boxed{6}
+\]
+
+\subsection*{Evolución de los valores de \( a \) y \( b \)}
+
+\[
+\begin{array}{|c|c|c|}
+\hline
+\text{Iteración} & a & b \\ \hline
+0 & 18 & 24 \\
+1 & 24 & 18 \\
+2 & 18 & 6 \\
+3 & 6 & 0 \\ \hline
+\end{array}
+\]
+
+\subsection*{Gráfica de la evolución de \( a \) y \( b \)}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.9\textwidth,
+    height=7cm,
+    grid=major,
+    axis lines=left,
+    xlabel={Iteración},
+    ylabel={Valor},
+    xtick={0,1,2,3},
+    ytick={0,6,12,18,24},
+    legend style={at={(0.5,-0.2)}, anchor=north, legend columns=2},
+    ymin=0,
+    ymax=26,
+    xmin=-0.2,
+    xmax=3.2,
+    mark size=2.5pt,
+]
+
+\addplot[
+    color=blue,
+    mark=*,
+] coordinates {
+    (0,18) (1,24) (2,18) (3,6)
+};
+\addlegendentry{$a$}
+
+\addplot[
+    color=red,
+    mark=square*,
+] coordinates {
+    (0,24) (1,18) (2,6) (3,0)
+};
+\addlegendentry{$b$}
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+
+\section*{Código Python correspondiente}
+
+\begin{tcolorbox}[colback=gray!10, colframe=black!70, title=Código en Python]
+\begin{lstlisting}[language=Python]
+
+import matplotlib.pyplot as plt
+
+# 1. Función que simula el procedimiento descrito
+def pro(a, b):
+    a_vals = [a]
+    b_vals = [b]
+    iteration = 0
+    print(f"Iteración {iteration}: a = {a}, b = {b}")
+    
+    while a % b != 0:
+        t = a
+        a = b
+        b = t % b
+        iteration += 1
+        print(f"Iteración {iteration}: a = {a}, b = {b}")
+        a_vals.append(a)
+        b_vals.append(b)
+    
+    # Final values
+    return b, a_vals, b_vals
+
+# 2. Inicializar valores
+a_init = 18
+b_init = 24
+
+# 3. Ejecutar la función
+resultado, a_evolucion, b_evolucion = pro(a_init, b_init)
+
+# 4. Mostrar resultado final
+print(f"\nEl valor final es: y = {resultado}")
+
+# 5. Mostrar tabla de evolución
+print("\nTabla de evolución de a y b:")
+print(f"{'Iteración':<10}{'a':<5}{'b':<5}")
+for i in range(len(a_evolucion)):
+    print(f"{i:<10}{a_evolucion[i]:<5}{b_evolucion[i]:<5}")
+
+# 6. Graficar evolución
+plt.figure(figsize=(8,5))
+plt.plot(range(len(a_evolucion)), a_evolucion, marker='o', label='a', color='blue')
+plt.plot(range(len(b_evolucion)), b_evolucion, marker='s', label='b', color='red')
+
+plt.title("Evolución de los valores de a y b")
+plt.xlabel("Iteración")
+plt.ylabel("Valor")
+plt.xticks(range(len(a_evolucion)))
+plt.yticks(range(0, max(b_init, a_init)+2, 6))
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+\end{lstlisting}
+\end{tcolorbox}
+
+
+
+
+\section*{Ejercicio 10}
+
+\subsection*{Respuesta final}
+
+\[
+\boxed{[1\ 2\ 7\ 2\ 1\ 5\ 1\ 9]}
+\]
+
+\subsection*{Explicación paso a paso}
+
+\paragraph{1. Datos iniciales}
+
+El arreglo de entrada es:
+\[
+y = [9\ 1\ 5\ 1\ 2\ 7\ 2\ 1]
+\]
+La longitud del arreglo es:
+\[
+n = 8,\quad \text{límite de iteraciones: } \lim = \frac{n}{2} = 4.
+\]
+
+\paragraph{2. Iteraciones del bucle}
+
+Realizamos 4 iteraciones intercambiando elementos simétricos:
+
+\begin{itemize}
+  \item \textbf{Iteración 1 ($k=1$):}
+  \[
+    u = y(1) = 9,\quad
+    y(1) \gets y(8)=1,\quad
+    y(8)\gets u=9,\quad
+    y = [1\ 1\ 5\ 1\ 2\ 7\ 2\ 9].
+  \]
+  \item \textbf{Iteración 2 ($k=2$):}
+  \[
+    u = y(2) = 1,\quad
+    y(2)\gets y(7)=2,\quad
+    y(7)\gets u=1,\quad
+    y = [1\ 2\ 5\ 1\ 2\ 7\ 1\ 9].
+  \]
+  \item \textbf{Iteración 3 ($k=3$):}
+  \[
+    u = y(3) = 5,\quad
+    y(3)\gets y(6)=7,\quad
+    y(6)\gets u=5,\quad
+    y = [1\ 2\ 7\ 1\ 2\ 5\ 1\ 9].
+  \]
+  \item \textbf{Iteración 4 ($k=4$):}
+  \[
+    u = y(4) = 1,\quad
+    y(4)\gets y(5)=2,\quad
+    y(5)\gets u=1,\quad
+    y = [1\ 2\ 7\ 2\ 1\ 5\ 1\ 9].
+  \]
+\end{itemize}
+
+\paragraph{3. Resultado final}
+
+\[
+z = y = [1\ 2\ 7\ 2\ 1\ 5\ 1\ 9].
+\]
+
+\subsection*{Tabla de trazado del algoritmo}
+
+\[
+\begin{array}{|c|c|c|c|c|c|}
+\hline
+k & u & y(k) & y(n-k+1) & n & \lim \\ \hline
+1 & 9 & 1 & 9 & 8 & 4 \\
+2 & 1 & 2 & 1 & 8 & 4 \\
+3 & 5 & 7 & 5 & 8 & 4 \\
+4 & 1 & 2 & 1 & 8 & 4 \\ \hline
+\end{array}
+\]
+
+\subsection*{Gráfica de evolución del arreglo}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \begin{axis}[
+    width=0.95\textwidth,
+    height=8cm,
+    grid=major,
+    xlabel={Índice},
+    ylabel={Valor},
+    ymin=0, ymax=10,
+    xmin=0.5, xmax=8.5,
+    xtick={1,2,...,8},
+    ytick={0,2,4,6,8,10},
+    legend style={at={(0.5,-0.2)}, anchor=north, legend columns=2},
+  ]
+    \addplot[mark=*, red] coordinates {
+      (1,9) (2,1) (3,5) (4,1) (5,2) (6,7) (7,2) (8,1)
+    };
+    \addlegendentry{Inicial $y$}
+
+    \addplot[mark=square*, blue] coordinates {
+      (1,1) (2,2) (3,7) (4,2) (5,1) (6,5) (7,1) (8,9)
+    };
+    \addlegendentry{Final $z$}
+  \end{axis}
+\end{tikzpicture}
+\caption{Comparación del arreglo antes y después del intercambio}
+\end{figure}
+
+
+
+
+\subsection*{Código Python}
+	
+\begin{tcolorbox}[colback=gray!10, colframe=black!70, title=Código en Python]
+\begin{lstlisting}[language=Python]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 1. Datos iniciales
+y = [9, 1, 5, 1, 2, 7, 2, 1]
+n = len(y)
+lim = n // 2
+print("Arreglo original y:")
+print(y)
+print(f"n = {n}, límite de iteraciones = {lim}")
+
+# Para guardar los pasos en la tabla
+tabla = []
+
+# 2. Proceso paso a paso
+y_proceso = y.copy()
+for k in range(1, lim + 1):
+    u = y_proceso[k - 1]
+    yk = y_proceso[n - k]
+    y_proceso[k - 1] = yk
+    y_proceso[n - k] = u
+    print(f"\nIteración {k}:")
+    print(f"u = {u}")
+    print(f"y({k}) = {yk}")
+    print(f"y({n-k+1}) = {u}")
+    print(f"Arreglo: {y_proceso}")
+    tabla.append([k, u, y_proceso[k - 1], y_proceso[n - k], n, lim])
+
+# 3. Resultado final
+z = y_proceso
+print("\nResultado final z:")
+print(z)
+
+# 4. Tabla de trazado (como texto plano)
+print("\nTabla de trazado del algoritmo:")
+print(f"{'k':^3} | {'u':^3} | {'y(k)':^5} | {'y(n-k+1)':^10} | {'n':^3} | {'lim':^3}")
+print("-" * 37)
+for fila in tabla:
+    print(f"{fila[0]:^3} | {fila[1]:^3} | {fila[2]:^5} | {fila[3]:^10} | {fila[4]:^3} | {fila[5]:^3}")
+
+# 5. Gráfica de evolución del arreglo
+plt.figure(figsize=(10,6))
+plt.plot(range(1, n+1), y, marker='o', linestyle='-', color='red', label='Inicial y')
+plt.plot(range(1, n+1), z, marker='s', linestyle='-', color='blue', label='Final z')
+plt.xticks(range(1, n+1))
+plt.yticks(range(0, 11, 2))
+plt.grid(True)
+plt.xlabel("Índice")
+plt.ylabel("Valor")
+plt.title("Evolución del arreglo")
+plt.legend()
+plt.show()
+
+
+\end{lstlisting}
+\end{tcolorbox}
+	
+
+
+
+
+%----------
+
+
+\section*{Ejercicio 15}
+
+\subsection*{Planteamiento del problema}
+
+Se considera la sucesión definida por:
+\[
+a_1 = 0,\quad a_2 = 1,\quad a_n = 3a_{n-1} + 2a_{n-2}\quad (n > 2).
+\]
+Se desea obtener el \textbf{valor} y el \textbf{índice} del primer término tal que \(a_n \ge 100\).
+
+\subsection*{1. Cálculo de los primeros términos}
+
+\[
+\begin{aligned}
+a_1 &= 0,\\
+a_2 &= 1,\\
+a_3 &= 3\cdot a_2 + 2\cdot a_1 = 3\cdot1 + 2\cdot0 = 3,\\
+a_4 &= 3\cdot a_3 + 2\cdot a_2 = 3\cdot3 + 2\cdot1 = 11,\\
+a_5 &= 3\cdot a_4 + 2\cdot a_3 = 3\cdot11 + 2\cdot3 = 39,\\
+a_6 &= 3\cdot a_5 + 2\cdot a_4 = 3\cdot39 + 2\cdot11 = 149,\\
+\vdots
+\end{aligned}
+\]
+
+\subsection*{2. Determinación del primer término \(\ge 100\)}
+
+De la lista anterior, observamos que:
+\[
+a_5 = 39 < 100, 
+\quad a_6 = 149 \ge 100.
+\]
+Por lo tanto, el primer término que supera 100 es:
+\[
+\boxed{a_6 = 149}.
+\]
+El índice correspondiente es \(n = 6\).
+
+\subsection*{3. Tabla de términos hasta el umbral}
+
+\begin{center}
+\begin{tabular}{c|c}
+\toprule
+\(n\) & \(a_n\) \\
+\midrule
+1 & 0    \\
+2 & 1    \\
+3 & 3    \\
+4 & 11   \\
+5 & 39   \\
+6 & 149  \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{4. Código Python para verificación}
+
+\begin{tcolorbox}[breakable, listing only, listing options={style=mypython}, colback=white, colframe=black]
+a = [0, 1]
+n = 2
+while True:
+    next_val = 3*a[-1] + 2*a[-2]
+    a.append(next_val)
+    n += 1
+    if next_val >= 100:
+        break
+
+print(f"El primer a_n ≥ 100 es a_{n} = {next_val}")
+print("Secuencia completa hasta ese término:", a)
+\end{tcolorbox}
+
+\subsection*{5. Resultado final}
+
+El primer término de la sucesión tal que \(a_n \ge 100\) es
+\[
+\boxed{a_6 = 149}.
+\]
+
+	
+\subsection*{Código Python utilizado}
+	
+\begin{tcolorbox}[colback=gray!10, colframe=black!70, title=Código en Python]
+\begin{lstlisting}[language=Python]
+import matplotlib.pyplot as plt
+		
+# Definir la sucesión
+a = [0, 1]  # a[0] = a1, a[1] = a2
+n = 2
+		
+# Calcular hasta que a_n >= 100
+while True:
+    an = 3 * a[n-1] + 2 * a[n-2]
+	a.append(an)
+	n += 1
+	if an >= 100:
+		break
+		
+  # Mostrar el valor y la posición
+ print(f"El primer término a_n ≥ 100 es: a_{n} = {an}")
+ # Gráfica
+plt.figure(figsize=(8, 5))
+plt.plot(range(1, n+1), a, marker='o', color='blue', linestyle='-', linewidth=2)
+plt.title("Valores de la sucesión hasta que $a_n \\geq 100$")
+plt.xlabel("$n$")
+plt.ylabel("$a_n$")
+plt.grid(True)
+plt.xticks(range(1, n+1))
+plt.yticks(range(0, max(a)+1, 20))
+for i, val in enumerate(a):
+    plt.text(i+1, val + 3, str(val), ha='center')
+plt.tight_layout()
+plt.show()
+		
+\end{lstlisting}
+\end{tcolorbox}
+
+
+\subsection*{Ejecución del código en Python}
+
+\begin{pycode}
+import matplotlib.pyplot as plt
+
+# Definir la sucesión
+a = [0, 1]  # a[0] = a1, a[1] = a2
+n = 2
+
+# Calcular hasta que a_n >= 100
+while True:
+    an = 3 * a[n-1] + 2 * a[n-2]
+    a.append(an)
+    n += 1
+    if an >= 100:
+        break
+\end{pycode}
+
+\subsection*{Resultados}
+
+El primer término que cumple la condición es:
+\[
+\boxed{a_{\py{n}} = \py{an}}
+\]
+
+La posición (rango) del término es:
+\[
+\boxed{n = \py{n}}
+\]
+
+\subsection*{Gráfica de la sucesión}
+
+\begin{pycode}
+# Generar y guardar la gráfica
+plt.figure(figsize=(6,4))
+plt.plot(range(1, n+1), a, marker='o', color='blue', linestyle='-', linewidth=2)
+plt.title("Valores de la sucesión hasta que $a_n \\geq 100$")
+plt.xlabel("$n$")
+plt.ylabel("$a_n$")
+plt.grid(True)
+plt.xticks(range(1, n+1))
+plt.yticks(range(0, max(a)+1, 20))
+for i, val in enumerate(a):
+    plt.text(i+1, val + 3, str(val), ha='center')
+plt.tight_layout()
+plt.savefig("sucesion_plot.png")
+\end{pycode}
+
+\begin{center}
+    \includegraphics[width=0.9\textwidth]{sucesion_plot.png}
+\end{center}
+
+\bigskip
+
+\noindent\textbf{Conclusión:} El primer término de la sucesión que es mayor o igual a 100 es:
+\[
+\boxed{a_{\py{n}} = \py{an} \quad \text{y su rango es } n = \py{n}}
+\]
+
+
+%------------------------------------
+
+\section*{Método de la Secante - Cálculo del Coeficiente de Resistencia}
+
+\subsection*{Enunciado}
+
+\textbf{10.} La velocidad de un paracaidista está dada por:
+
+\[
+V = \frac{g \cdot m}{c} \left( 1 - e^{-\frac{c \cdot t}{m}} \right)
+\]
+
+donde \( g = 9.80 \, \frac{m}{s^2} \).
+
+Para un paracaidista de masa \( m = 75000 \, \text{gr} \), calcule el coeficiente \( c \left( \frac{gr}{s} \right) \) para el cual el paracaidista alcance una velocidad \( v = 3600 \, \frac{cm}{s} \) al final de \( t = 6 \, s \).
+
+Considere el intervalo inicial \([10000, 15000] \, \frac{gr}{s}\). Haga 3 iteraciones del método de la secante.
+
+\section*{Gráfica antes de la solución}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{50c1479c-9c26-42d4-99d5-4ffef8200126.png}
+    \caption{Enunciado original del problema}
+\end{figure}
+
+\section*{Solución con el Método de la Secante}
+
+Primero, definimos la función objetivo:
+
+\[
+f(c) = \frac{g \cdot m}{c} \left(1 - e^{-\frac{c \cdot t}{m}} \right) - v
+\]
+
+Sustituyendo los valores conocidos:
+
+\[
+f(c) = \frac{9.8 \cdot 75000}{c} \left(1 - e^{-\frac{6c}{75000}} \right) - 3600
+\]
+
+\subsection*{Iteración 0 (valores iniciales)}
+
+\[
+x_0 = 10000, \quad f(x_0) \approx 4.4744321
+\]
+\[
+x_1 = 15000, \quad f(x_1) \approx -1.7586
+\]
+
+\subsection*{Iteración 1}
+
+\[
+x_2 = x_1 - f(x_1) \cdot \frac{x_0 - x_1}{f(x_0) - f(x_1)}
+\]
+\[
+x_2 = 15000 - (-1.7586)\cdot\frac{10000 - 15000}{4.4744 - (-1.7586)} \approx 13589.3
+\]
+\[
+f(x_2) \approx -0.150185
+\]
+
+\subsection*{Iteración 2}
+
+\[
+x_3 = x_2 - f(x_2) \cdot \frac{x_1 - x_2}{f(x_1) - f(x_2)}
+\]
+\[
+x_3 = 13589.3 - (-0.150185) \cdot \frac{15000 - 13589.3}{-1.7586 - (-0.150185)} \approx 13457.6
+\]
+\[
+f(x_3) \approx 0.005637
+\]
+
+\subsection*{Iteración 3}
+
+\[
+x_4 = x_3 - f(x_3) \cdot \frac{x_2 - x_3}{f(x_2) - f(x_3)}
+\]
+\[
+x_4 = 13457.6 - 0.005637 \cdot \frac{13589.3 - 13457.6}{-0.150185 - 0.005637} \approx 13462.3
+\]
+\[
+f(x_4) \approx -0.000017
+\]
+
+\subsection*{Gráfica después de la solución}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{eafd08c4-8d8d-47a6-9fca-4aff45439446.png}
+    \caption{Desarrollo del método de la secante}
+\end{figure}
+
+\section*{Tabla de iteraciones}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccc@{}}
+\toprule
+\textbf{Iteración} & \textbf{$x_n$} & \textbf{$f(x_n)$} & \textbf{Error Aproximado} \\
+\midrule
+0 & 10000.0 & 4.4744321 & -- \\
+1 & 15000.0 & -1.7586 & -- \\
+2 & 13589.3 & -0.150185 & 10.4\% \\
+3 & 13457.6 & 0.005637 & 0.97\% \\
+4 & 13462.3 & -0.000017 & 0.03\% \\
+\bottomrule
+\end{tabular}
+\caption{Tabla de iteraciones del método de la secante}
+\end{table}
+
+\section*{Código Python utilizado}
+
+\begin{tcolorbox}[colback=gray!10, colframe=black!70, title=Código en Python]
+\begin{lstlisting}[language=Python]
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Parámetros dados
+g = 9.8  # m/s^2
+m = 75000  # gramos
+v_target = 3600  # cm/s
+t = 6  # segundos
+
+# Convertimos todo a unidades consistentes (opcional)
+# f(c) ya está en función de gramos y cm/s, por lo tanto no se convierte
+
+# Definición de la función
+def f(c):
+    return (g * m / c) * (1 - np.exp(-c * t / m)) - v_target
+
+# Crear la gráfica inicial (antes de aplicar el método)
+c_values = np.linspace(10000, 16000, 500)
+f_values = f(c_values)
+
+plt.figure(figsize=(10, 6))
+plt.plot(c_values, f_values, label='f(c)', color='blue')
+plt.axhline(0, color='gray', linestyle='--')
+plt.title("Gráfica de $f(c)$ antes de aplicar el método de la secante")
+plt.xlabel("c (gr/s)")
+plt.ylabel("f(c)")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.savefig("grafica_antes.png")
+plt.show()
+
+# Método de la secante
+x0 = 10000.0
+x1 = 15000.0
+iterations = [(x0, f(x0)), (x1, f(x1))]
+errors = [None, None]  # error aproximado
+
+for _ in range(3):  # hacer 3 iteraciones adicionales
+    f0 = iterations[-2][1]
+    f1 = iterations[-1][1]
+    x_prev, x_curr = iterations[-2][0], iterations[-1][0]
+    
+    x_next = x_curr - f1 * (x_prev - x_curr) / (f0 - f1)
+    fx_next = f(x_next)
+    
+    # Calcular error aproximado
+    ea = abs((x_next - x_curr) / x_next) * 100
+    iterations.append((x_next, fx_next))
+    errors.append(ea)
+
+# Imprimir resultados
+print("Iteración |    x_n    |   f(x_n)   |  Error Aproximado (%)")
+print("----------------------------------------------------------")
+for i, ((x_val, f_val), err) in enumerate(zip(iterations, errors)):
+    if err is None:
+        print(f"{i:<9} | {x_val:<9.4f} | {f_val:<10.6f} | {'--':>8}")
+    else:
+        print(f"{i:<9} | {x_val:<9.4f} | {f_val:<10.6f} | {err:>8.2f}")
+
+# Graficar resultado final con iteraciones
+x_vals = [pt[0] for pt in iterations]
+y_vals = [pt[1] for pt in iterations]
+
+plt.figure(figsize=(10, 6))
+plt.plot(c_values, f_values, label='f(c)', color='blue')
+plt.plot(x_vals, y_vals, 'ro--', label='Iteraciones (Secante)')
+plt.axhline(0, color='gray', linestyle='--')
+plt.title("Gráfica de $f(c)$ con iteraciones del método de la secante")
+plt.xlabel("c (gr/s)")
+plt.ylabel("f(c)")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.savefig("grafica_despues.png")
+plt.show()
+
+\end{lstlisting}
+\end{tcolorbox}
+
+
+\section*{Método de Newton-Raphson - Tasa de Alimentación Constante}
+
+\subsection*{Enunciado}
+
+\textbf{15.} En una planta procesadora de materiales, se realizó la molienda del material en un molino de barras, al cual se le ingresa el alimento dado por la siguiente razón:
+
+\[
+t(x) = x^3 - 0.5x + 4x - 2
+\]
+
+Para tener un correcto funcionamiento de la máquina, esta debe tener cierta cantidad de alimento por tiempo transcurrido. Encontrar para qué tiempo la alimentación es constante, dados los siguientes tiempos:
+
+\[
+t_0 = 0.4, \quad t_1 = 0.6, \quad t_2 = 0.8
+\]
+
+\subsection*{Gráfica antes de la solución}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{}
+\begin{figure}
+        \centering
+        \includegraphics[width=0.5\linewidth]{image.png}
+        \caption{Enter Caption}
+        \label{fig:enter-label}
+    \end{figure}
+        \caption{Captura del enunciado original}
+\end{figure}
+
+\subsection*{Solución}
+
+La función se simplifica como:
+
+\[
+f(x) = x^3 + 3.5x - 2
+\]
+y su derivada es:
+\[
+f'(x) = 3x^2 + 3.5
+\]
+
+Usamos el método de Newton-Raphson con una semilla inicial de \( x_0 = 0.4 \).
+
+\subsection*{Iteración 1}
+\[
+x_0 = 0.4
+\]
+\[
+f(x_0) = x_0^3 + 3.5x_0 - 2 = -0.536
+\]
+\[
+f'(x_0) = 3x_0^2 + 3.5 = 3.98
+\]
+\[
+x_1 = x_0 - \frac{f(x_0)}{f'(x_0)} = 0.4 - \frac{-0.536}{3.98} = 0.5347
+\]
+
+\subsection*{Iteración 2}
+\[
+x_1 = 0.5347
+\]
+\[
+f(x_1) = 0.02471
+\]
+\[
+f'(x_1) = 4.3537
+\]
+\[
+x_2 = x_1 - \frac{f(x_1)}{f'(x_1)} = 0.5347 - \frac{0.02471}{4.3537} = 0.5291
+\]
+
+\subsection*{Iteración 3}
+\[
+x_2 = 0.5291
+\]
+\[
+f(x_2) \approx -0.0002, \quad f'(x_2) \approx 4.33
+\]
+\[
+x_3 = x_2 - \frac{f(x_2)}{f'(x_2)} = 0.5291 - \frac{-0.0002}{4.33} \approx 0.5291
+\]
+
+\subsection*{Gráfica después de la solución}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{}
+\begin{figure}
+        \centering
+        \includegraphics[width=0.5\linewidth]{image.png}
+        \caption{Enter Caption}
+        \label{fig:enter-label}
+    \end{figure}
+        \caption{Desarrollo del método de Newton-Raphson}
+\end{figure}
+
+\subsection*{Tabla de Iteraciones}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccc@{}}
+\toprule
+\textbf{Iteración} & \textbf{$x_n$} & \textbf{$f(x_n)$} & \textbf{Error Aproximado} \\
+\midrule
+0 & 0.4000 & -0.5360 & -- \\
+1 & 0.5347 & 0.0247 & 25.7\% \\
+2 & 0.5291 & $\approx$ 0.0002 & 1.04\% \\
+3 & 0.5291 & $\approx$ 0 & 0.00\% \\
+\bottomrule
+\end{tabular}
+\caption{Iteraciones del método de Newton-Raphson}
+\end{table}
+
+\subsection*{Código Python Usado}
+
+\begin{tcolorbox}[colback=gray!10, colframe=black!70, title=Código en Python]
+\begin{lstlisting}[language=Python]
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Definición de la función f(x) y su derivada f'(x)
+def f(x):
+    return x**3 + 3.5*x - 2
+
+def df(x):
+    return 3*x**2 + 3.5
+
+# Método de Newton-Raphson
+def newton_raphson(x0, tol=1e-6, max_iter=10):
+    resultados = []
+    for i in range(max_iter):
+        fx = f(x0)
+        dfx = df(x0)
+        if dfx == 0:
+            raise ValueError("Derivada nula, no se puede continuar.")
+        x1 = x0 - fx / dfx
+        error = abs((x1 - x0) / x1) * 100 if i > 0 else None
+        resultados.append((i, x0, fx, error))
+        if abs(fx) < tol:
+            break
+        x0 = x1
+    return resultados
+
+# Ejecutar el método con semilla inicial
+x0 = 0.4
+iteraciones = newton_raphson(x0)
+
+# Mostrar tabla de resultados
+print(f"{'Iteración':<10} {'x_n':<10} {'f(x_n)':<12} {'Error (%)':<10}")
+for i, xn, fxn, err in iteraciones:
+    err_str = f"{err:.2f}%" if err is not None else "--"
+    print(f"{i:<10} {xn:<10.4f} {fxn:<12.6f} {err_str:<10}")
+
+# Graficar la función y los puntos
+x_vals = np.linspace(0, 1, 400)
+y_vals = f(x_vals)
+
+plt.figure(figsize=(10, 6))
+plt.plot(x_vals, y_vals, label='f(x) = x³ + 3.5x - 2', color='blue')
+plt.axhline(0, color='black', linewidth=0.8, linestyle='--')
+
+# Marcar los puntos de iteración
+for i, xn, fxn, _ in iteraciones:
+    plt.plot(xn, f(xn), 'ro')
+    plt.text(xn, f(xn), f'{i}', fontsize=9, ha='right')
+
+plt.title('Método de Newton-Raphson')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+
+\end{lstlisting}
+\end{tcolorbox}
+
+
+%------------ejercicio 20
+
+
+\section*{EJERCICIO 20}
+
+Durante el diseño de un evaporador de efecto simple utilizado para concentrar jugo de naranja, se requiere conocer la temperatura de ebullición del jugo en función de la presión interna del sistema. La relación entre la presión (en kPa) y la temperatura de ebullición (en °C) se puede aproximar por la ecuación de Antoine modificada:
+
+\[
+f(T) = \log_{10}(P) - A + \frac{B}{C + T} = 0
+\]
+
+donde:
+\begin{itemize}
+    \item \( P = 50 \) kPa (presión del sistema),
+    \item \( A = 8.07131 \), \( B = 1730.63 \), \( C = 233.426 \) (constantes para el agua, como aproximación del jugo),
+    \item \( T_0 = 45^\circ C \) (valor inicial).
+\end{itemize}
+
+Utiliza el método de Newton-Raphson para encontrar la temperatura de ebullición del jugo (valor de \( T \)) con una precisión de 0.001 °C.
+
+\subsection*{Resolución }
+
+Queremos resolver:
+
+\[
+f(T) = \log_{10}(50) - 8.07131 + \frac{1730.63}{233.426 + T}
+\]
+
+La derivada es:
+
+\[
+f'(T) = -\frac{1730.63}{(233.426 + T)^2}
+\]
+
+\subsection*{Iteración 0 (Inicial)}
+
+\begin{align*}
+f(45) &= 1.69897 - 8.07131 + \frac{1730.63}{278.426} = -0.15534 \\
+f'(45) &= -\frac{1730.63}{(278.426)^2} = -0.02233 \\
+T_1 &= 45 - \frac{-0.15534}{-0.02233} = 38.043
+\end{align*}
+
+\subsection*{Iteración 1}
+
+\begin{align*}
+f(38.043) &= 1.69897 - 8.07131 + \frac{1730.63}{271.469} = 0.00566 \\
+f'(38.043) &= -\frac{1730.63}{(271.469)^2} = -0.02345 \\
+T_2 &= 38.043 - \frac{0.00566}{-0.02345} = 38.284
+\end{align*}
+
+\subsection*{Iteración 2}
+
+\begin{align*}
+f(38.284) &= 1.69897 - 8.07131 + \frac{1730.63}{271.710} = 0.00066 \\
+f'(38.284) &= -\frac{1730.63}{(271.710)^2} = -0.02344 \\
+T_3 &= 38.284 - \frac{0.00066}{-0.02344} = 38.312
+\end{align*}
+
+\subsection*{Tabla de iteraciones}
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+\textbf{Iteración} & \( T \) (°C) & \( f(T) \) & \( f'(T) \) \\
+\midrule
+0 & 45.000 & -0.15534 & -0.02233 \\
+1 & 38.043 & 0.00566  & -0.02345 \\
+2 & 38.284 & 0.00066  & -0.02344 \\
+3 & 38.312 & ≈0       & -0.02344 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Gráfica de la función \( f(T) \)}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm,
+    height=8cm,
+    xlabel={$T$ (°C)},
+    ylabel={$f(T)$},
+    grid=major,
+    domain=30:50,
+    samples=200,
+    axis lines=middle,
+    ymin=-0.2,
+    ymax=0.2,
+    enlargelimits=true,
+    legend style={at={(0.98,0.95)}, anchor=north east}
+]
+\addplot[blue, thick] {log10(50) - 8.07131 + (1730.63)/(233.426 + x)};
+\addlegendentry{$f(T)$}
+\addplot[dashed, red] coordinates {(38.31, -0.2) (38.31, 0.2)};
+\addlegendentry{Raíz aproximada}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Después de tres iteraciones, encontramos que la temperatura de ebullición del jugo de naranja a una presión de 50 kPa es aproximadamente:
+
+\[
+T = 38.31^\circ C
+\]
+
+\subsection*{Código Python utilizado}
+
+\begin{tcolorbox}[colback=gray!10, colframe=black!70, title=Código en Python]
+\begin{lstlisting}[language=Python]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Constantes
+P = 50  # presión en kPa
+A = 8.07131
+B = 1730.63
+C = 233.426
+T0 = 45  # Valor inicial en °C
+tolerance = 0.001  # Precisión requerida
+max_iter = 10  # Límite de iteraciones
+
+# Función f(T) según la ecuación de Antoine modificada
+def f(T):
+    return np.log10(P) - A + B / (C + T)
+
+# Derivada de f(T)
+def df(T):
+    return -B / (C + T)**2
+
+# Método de Newton-Raphson
+T = T0
+iterations = []
+
+for i in range(max_iter):
+    f_val = f(T)
+    df_val = df(T)
+    T_next = T - f_val / df_val
+    iterations.append((i, T, f_val, df_val))
+    
+    if abs(T_next - T) < tolerance:
+        T = T_next
+        break
+    T = T_next
+
+# Mostrar resultados en tabla
+print(f"{'Iteración':<10} {'T (°C)':<10} {'f(T)':<12} {'f\'(T)':<12}")
+for i, T_val, f_val, df_val in iterations:
+    print(f"{i:<10} {T_val:<10.3f} {f_val:<12.5f} {df_val:<12.5f}")
+
+print(f"\nTemperatura de ebullición aproximada: T ≈ {T:.3f} °C")
+
+# Graficar la función f(T)
+T_vals = np.linspace(30, 50, 400)
+f_vals = f(T_vals)
+
+plt.figure(figsize=(10, 6))
+plt.axhline(0, color='black', linewidth=0.8, linestyle='--')
+plt.plot(T_vals, f_vals, label='f(T)', color='blue')
+plt.axvline(T, color='red', linestyle='--', label=f'Raíz ≈ {T:.3f} °C')
+plt.title("Función f(T) - Método de Newton-Raphson")
+plt.xlabel("Temperatura T (°C)")
+plt.ylabel("f(T)")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+
+\end{tcolorbox}
+
+
+%--------------20
+
+
+
+
+\section*{Resolución del ejercicio 20 por el método de Bisección}
+
+\subsection*{Planteamiento del problema}
+
+Se desea resolver la siguiente ecuación no lineal, obtenida a partir del promedio de los números $1, 2, 3, 4, x$ igual a 3:
+
+\[
+\frac{1 + 2 + 3 + 4 + x}{5} = 3
+\Rightarrow \frac{10 + x}{5} = 3
+\Rightarrow x = 5
+\]
+
+Queremos resolver esta ecuación con el método de bisección.
+
+\subsection*{Formulación de $f(x)$}
+
+\[
+f(x) = \frac{x - 5}{5}
+\]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = middle,
+    xlabel = $x$,
+    ylabel = $f(x)$,
+    xmin=0, xmax=10,
+    ymin=-1, ymax=1,
+    legend pos = north west,
+    grid=major,
+    width=13cm,
+    height=9cm,
+    samples=100,
+    domain=0:10
+]
+\addplot[blue, thick] {(x - 5)/5};
+\addlegendentry{$f(x) = \frac{x - 5}{5}$}
+\addplot[only marks, mark=*, mark size=2pt, color=red] coordinates {(5,0)};
+\node at (axis cs:5.2,0.1) {\small Raíz $x = 5$};
+\end{axis}
+\end{tikzpicture}
+\caption{Gráfica de $f(x)$ donde se observa la raíz en $x = 5$}
+\end{figure}
+
+\subsection*{Condiciones del método de bisección}
+
+Para aplicar el método de bisección se requiere:
+
+\begin{itemize}
+  \item Una función continua $f(x)$
+  \item Un intervalo $[a, b]$ tal que $f(a) \cdot f(b) < 0$
+\end{itemize}
+
+Tomamos $a = 1$ y $b = 10$:
+
+\[
+f(1) = \frac{1-5}{5} = -0.8, \quad f(10) = \frac{10-5}{5} = 1.0 \Rightarrow f(1) \cdot f(10) < 0
+\]
+\[
+\Rightarrow \text{Condición cumplida}
+\]
+
+\subsection*{Estimación del número de iteraciones}
+
+\[
+n \geq \frac{\ln \left(\frac{b - a}{\text{tolerancia}}\right)}{\ln 2} = \frac{\ln \left(\frac{10 - 1}{10^{-4}}\right)}{\ln 2} \approx 16.47
+\]
+\[
+\Rightarrow \text{Se requieren al menos 17 iteraciones}
+\]
+
+\subsection*{Iteraciones detalladas (Paso a paso)}
+
+\subsubsection*{Iteración 1}
+
+\[
+x_1 = \frac{1 + 10}{2} = 5.5, \quad f(5.5) = \frac{5.5 - 5}{5} = 0.1
+\]
+
+Como $f(1) \cdot f(5.5) = (-0.8) \cdot (0.1) = -0.08 < 0$, la raíz está en $[1, 5.5]$
+
+\subsubsection*{Iteración 2}
+
+\[
+x_2 = \frac{1 + 5.5}{2} = 3.25, \quad f(3.25) = \frac{3.25 - 5}{5} = -0.35
+\]
+
+Ahora, $f(3.25) \cdot f(5.5) = (-0.35) \cdot (0.1) = -0.035 < 0$, la raíz está en $[3.25, 5.5]$
+
+\subsubsection*{Iteración 3}
+
+\[
+x_3 = \frac{3.25 + 5.5}{2} = 4.375, \quad f(4.375) = \frac{4.375 - 5}{5} = -0.125
+\]
+
+La raíz está en $[4.375, 5.5]$.
+
+\subsection*{Tabla de iteraciones}
+
+\begin{table}[H]
+\centering
+\caption{Iteraciones del método de bisección}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+Iteración & $a$ & $b$ & $x_m$ & $f(x_m)$ \\
+\midrule
+1 & 1.000000 & 10.000000 & 5.500000 & 0.100000 \\
+2 & 1.000000 & 5.500000 & 3.250000 & -0.350000 \\
+3 & 3.250000 & 5.500000 & 4.375000 & -0.125000 \\
+4 & 4.375000 & 5.500000 & 4.937500 & -0.012500 \\
+5 & 4.937500 & 5.500000 & 5.218750 & 0.043750 \\
+6 & 4.937500 & 5.218750 & 5.078125 & 0.015625 \\
+7 & 4.937500 & 5.078125 & 5.007812 & 0.001562 \\
+8 & 4.937500 & 5.007812 & 4.972656 & -0.005469 \\
+9 & 4.972656 & 5.007812 & 4.990234 & -0.001953 \\
+10 & 4.990234 & 5.007812 & 4.999023 & -0.000195 \\
+11 & 4.999023 & 5.007812 & 5.003418 & 0.000684 \\
+12 & 4.999023 & 5.003418 & 5.001221 & 0.000244 \\
+13 & 4.999023 & 5.001221 & 5.000122 & 0.000024 \\
+14 & 4.999023 & 5.000122 & 4.999573 & -0.000085 \\
+15 & 4.999573 & 5.000122 & 4.999847 & -0.000031 \\
+16 & 4.999847 & 5.000122 & 4.999985 & -0.000003 \\
+17 & 4.999985 & 5.000122 & 5.000053 & 0.000011 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Resultado final}
+
+La raíz de la ecuación $f(x) = \dfrac{x - 5}{5} = 0$ fue hallada mediante el método de bisección.
+
+Luego de 17 iteraciones, se obtuvo una aproximación para la raíz:
+
+\[
+\boxed{x \approx 5.000053}
+\]
+
+Esta solución cumple con el criterio de tolerancia fijado ($|f(x)| < 10^{-5}$):
+
+\[
+|f(5.000053)| = \left|\frac{5.000053 - 5}{5}\right| = \left|0.0000106\right| \approx 1.06 \times 10^{-5}
+\]
+
+\subsection*{Implementación computacional}
+
+\begin{tcolorbox}[title=Código Python: Método de Bisección,
+                  colback=white,
+                  colframe=black,
+                  breakable,
+                  enhanced]
+
+\begin{lstlisting}[style=mypython]
+def f(x):
+    return (x - 5)/5  # Función objetivo
+
+# Parámetros iniciales
+a, b = 1, 10
+TOL = 1e-5
+iteraciones = []
+
+print("Iteración | a         | b         | xm        | f(xm)")
+print("-"*55)
+
+for i in range(50):
+    xm = (a + b) / 2
+    fxm = f(xm)
+    iteraciones.append((i+1, a, b, xm, fxm))
+    
+    # Mostrar valores actuales
+    print(f"{i+1:<9} | {a:<9.6f} | {b:<9.6f} | {xm:<9.6f} | {fxm:.6f}")
+    
+    if abs(fxm) < TOL:
+        print("\nConvergencia alcanzada")
+        break
+    
+    if f(a) * fxm < 0:
+        b = xm
+    else:
+        a = xm
+
+# Gráfica
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 10, 200)
+y = f(x)
+plt.figure(figsize=(10, 6))
+plt.plot(x, y, label="f(x) = (x - 5)/5", color="blue")
+plt.axhline(0, color='black', linestyle='--')
+plt.axvline(5, color='red', linestyle=':', label="Raíz exacta (x=5)")
+plt.scatter(5.000053, 0, color='green', s=60, 
+            label="Aproximación (x≈5.000053)")
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.title("Método de Bisección: Solución de $f(x) = \\frac{x-5}{5} = 0$")
+plt.grid(True)
+plt.legend()
+plt.savefig("biseccion_ejercicio20.png")  # Guardar imagen
+plt.show()
+\end{lstlisting}
+\end{tcolorbox}
+
+%------------------------------------------------25
+
+
+
+\section*{Ejercicio 25: Aplicación del Método de Newton–Raphson a la Sucesión de Fibonacci}
+
+
+\subsection*{1. Planteamiento del problema}
+Se desea encontrar el \textbf{valor de $n$} para el cual el \textbf{$n$-ésimo término de la sucesión de Fibonacci} sea igual a 55:
+\[
+F(n) = 55.
+\]
+Usamos la fórmula de Binet:
+\[
+F(n) = \frac{1}{\sqrt{5}}\bigl(\phi^n - \psi^n\bigr),
+\quad
+\phi = \tfrac{1+\sqrt{5}}{2},\;\psi = \tfrac{1-\sqrt{5}}{2},
+\]
+y para $n$ grande $\psi^n\approx0$, de modo que
+\[
+F(n)\approx\frac{\phi^n}{\sqrt{5}}.
+\]
+Definimos
+\[
+f(n)=\frac{\phi^n}{\sqrt{5}} - 55,
+\]
+y aplicamos Newton–Raphson a $f(n)=0$.
+
+\subsection*{2. Fórmula del método}
+La iteración de Newton–Raphson es
+\[
+n_{i+1}
+= n_i
+- \frac{f(n_i)}{f'(n_i)},
+\]
+con
+\[
+f(n)=\frac{\phi^n}{\sqrt{5}}-55,\qquad
+f'(n)=\frac{\phi^n\ln(\phi)}{\sqrt{5}}.
+\]
+Por tanto:
+\[
+n_{i+1}
+= n_i
+- \frac{\phi^{n_i}-55\sqrt5}{\phi^{n_i}\ln(\phi)}.
+\]
+El criterio de parada es $|n_{i+1}-n_i|<10^{-4}$.
+
+\subsection*{3. Gráfica de $f(n)$}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \begin{axis}[
+    width=13cm, height=8cm,
+    axis lines=middle,
+    xlabel={$n$}, ylabel={$f(n)$},
+    domain=0:12, samples=200,
+    ymin=-60, ymax=100,
+    xtick={0,2,4,6,8,10,12},
+    ytick={-50,0,50,100},
+    grid=major,
+    legend style={at={(0.05,0.95)}, anchor=north west}
+  ]
+    \addplot[very thick, blue] {(1.618034)^(x)/2.2360679775 - 55};
+    \addlegendentry{$f(n)$}
+    \addplot[only marks, mark=*, mark options={fill=green!80!black}] coordinates {(10,0)};
+    \node at (axis cs:10,-10) [anchor=north] {Raíz $n\approx10$};
+    \addplot[dashed, red, domain=3.5:4.5] {-51.93 + 1.475*(x-4)};
+    \addlegendentry{Tangente en $n=4$}
+  \end{axis}
+\end{tikzpicture}
+\caption{Gráfica de $f(n)$ con raíz aproximada y tangente inicial}
+\end{figure}
+
+\subsection*{4. Iteraciones paso a paso}
+\textbf{Datos iniciales:} $n_0=4$, 
+\(\phi\approx1.61803\), 
+\(\sqrt{5}\approx2.23607\), 
+\(\ln(\phi)\approx0.4812\).
+
+\begin{itemize}[left=0pt]
+  \item \textbf{Iteración 1:}
+    \[
+    \begin{aligned}
+      f(4)&=\tfrac{\phi^4}{\sqrt5}-55\approx\tfrac{6.854}{2.236}-55\approx-51.93,\\
+      f'(4)&=\tfrac{\phi^4\,\ln\phi}{\sqrt5}\approx\tfrac{6.854\cdot0.4812}{2.236}\approx1.475,\\
+      n_1&=4-\frac{-51.93}{1.475}\approx39.209.
+    \end{aligned}
+    \]
+  \item \textbf{Iteración 2:}
+    \[
+    \begin{aligned}
+      f(39.209)&\approx3.51\times10^7,\quad f'(39.209)\approx1.69\times10^7,\\
+      n_2&=39.209-\frac{3.51\times10^7}{1.69\times10^7}\approx37.131.
+    \end{aligned}
+    \]
+  \item \textbf{Iteración 3:}
+    \[
+    \begin{aligned}
+      f(37.131)&\approx1.29\times10^7,\quad f'(37.131)\approx6.21\times10^6,\\
+      n_3&=37.131-\frac{1.29\times10^7}{6.21\times10^6}\approx35.053.
+    \end{aligned}
+    \]
+\end{itemize}
+
+\subsection*{5. Tabla de iteraciones extendida}
+\begin{center}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Iteración & $n_i$     & $f(n_i)$      & $f'(n_i)$     & $n_{i+1}$ & Error     \\
+\midrule
+1  &  4.000   &   -51.934    &   1.475   &   39.209   & 35.209  \\
+2  & 39.209   & $3.51\!\times10^7$ & $1.69\!\times10^7$ & 37.131 &  2.078  \\
+3  & 37.131   & $1.29\!\times10^7$ & $6.21\!\times10^6$ & 35.053 &  2.078  \\
+4  & 35.053   & $4.78\!\times10^6$ & $2.28\!\times10^6$ & 32.960 &  2.093  \\
+5  & 32.960   & $1.76\!\times10^6$ & $8.39\!\times10^5$ & 30.858 &  2.102  \\
+6  & 30.858   & $6.45\!\times10^5$ & $3.10\!\times10^5$ & 28.780 &  2.078  \\
+7  & 28.780   & $2.37\!\times10^5$ & $1.15\!\times10^5$ & 26.717 &  2.063  \\
+8  & 26.717   & $8.68\!\times10^4$ & $4.29\!\times10^4$ & 24.684 &  2.033  \\
+9  & 24.684   & $3.18\!\times10^4$ & $1.62\!\times10^4$ & 22.715 &  1.969  \\
+10 & 22.715   & $1.17\!\times10^4$ & $6.09\!\times10^3$ & 20.792 &  1.923  \\
+\(\dots\) & \(\dots\) & \(\dots\) & \(\dots\) & \(\dots\) & \(\dots\) \\
+25 & 10.00001 & 0.00003       & 0.007     & 10.00000 & $<10^{-5}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{6. Código Python para la bisección}
+
+
+\begin{tcolorbox}[title=Código Python: Método de Bisección, 
+                  colback=white, colframe=black, breakable, enhanced]
+\begin{lstlisting}[style=mypython]
+def f(x):
+    return (x - 5)/5  # Función objetivo
+
+a, b = 1, 10          # Intervalo inicial
+TOL = 1e-5            # Tolerancia
+iteraciones = []
+
+for i in range(1, 51):
+    xm = (a + b) / 2
+    fxm = f(xm)
+    iteraciones.append((i, a, b, xm, fxm))
+    
+    if abs(fxm) < TOL:
+        break
+    
+    if f(a) * fxm < 0:
+        b = xm
+    else:
+        a = xm
+
+print("Iteración | a         | b         | xm        | f(xm)")
+for it in iteraciones:
+    print(f"{it[0]:<10}{it[1]:<11.6f}{it[2]:<11.6f}{it[3]:<11.6f}{it[4]:<11.6f}")
+
+# Gráfica
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 10, 200)
+y = f(x)
+plt.plot(x, y, label="f(x) = (x - 5)/5", color="blue")
+plt.axhline(0, color='black', linestyle='--')
+plt.axvline(5, color='red', linestyle=':', label="Raíz x=5")
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.title("Gráfica de f(x) y localización de la raíz")
+plt.grid(True)
+plt.legend()
+plt.show()
+\end{lstlisting}
+\end{tcolorbox}
+
+
+\subsection*{7. Interpretación del resultado}
+El resultado final es:
+\[
+n \approx 10.00000,
+\]
+por lo que el \(10\)-ésimo término de Fibonacci es 55, validando el método aplicado.
+
+
+%_--------------------------------------------------30
+
+
+
+
+\section*{Ejercicio 30: Suma de Múltiplos de 3 con Newton–Raphson}
+
+\subsection*{Planteamiento del problema}
+
+Dado un vector \( x \), se desea calcular la suma de todos los elementos que son múltiplos de 3. Reformularemos el problema como una ecuación no lineal para aplicar el método de Newton–Raphson.
+
+\subsubsection*{Vector de entrada}
+\[
+x = [2, 3, 5, 6, 9, 11, 12]
+\]
+
+\subsubsection*{Paso 1: Identificar múltiplos de 3}
+\[
+\text{Múltiplos de 3} = [3, 6, 9, 12]
+\]
+
+\subsubsection*{Paso 2: Calcular la suma de los múltiplos}
+\[
+\sum = 3 + 6 + 9 + 12 = 30
+\]
+
+\subsubsection*{Paso 3: Definimos la ecuación no lineal}
+\[
+f(S) = S - 30, 
+\qquad
+f'(S) = 1.
+\]
+
+\subsection*{Aplicación del Método de Newton–Raphson}
+
+La fórmula general es:
+\[
+S_{n+1} = S_n - \frac{f(S_n)}{f'(S_n)}.
+\]
+
+\textbf{Iteración 1:}
+\[
+S_0 = 0 \;\Rightarrow\; f(S_0) = -30
+\;\Rightarrow\;
+S_1 = 0 - \frac{-30}{1} = 30.
+\]
+Por lo tanto, con una sola iteración llegamos a:
+\[
+S = 30.
+\]
+
+\subsection*{Visualización gráfica del método}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            axis lines=center,
+            xlabel={$S$},
+            ylabel={$f(S)$},
+            xmin=-5, xmax=40,
+            ymin=-35, ymax=10,
+            grid=both,
+            width=13cm,
+            height=8cm,
+            legend style={draw=none, at={(0.98,0.98)}, anchor=north east}
+        ]
+        \addplot[blue, thick, domain=-5:40] {x - 30};
+        \addlegendentry{$f(S) = S - 30$}
+        \addplot[red, dashed, domain=-5:40] {x - 30};
+        \addlegendentry{Tangente en $S_0$}
+        \addplot[only marks, mark=*, mark options={fill=red}] coordinates {(0,-30)};
+        \node at (axis cs:1,-29) {\small $S_0$};
+        \addplot[only marks, mark=*, mark options={fill=green!70!black}] coordinates {(30,0)};
+        \node at (axis cs:31,1) {\small $S_1$};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Gráfica de $f(S)=S-30$ y la única iteración de Newton–Raphson}
+\end{figure}
+
+\subsection*{Tabla de Iteraciones}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccc@{}}
+\toprule
+\textbf{Iteración} & \(S_n\) & \(f(S_n)\) & \(S_{n+1}\) \\ \midrule
+0 & 0  & -30 & 30 \\
+1 & 30 &   0 & 30 \\ \bottomrule
+\end{tabular}
+\caption{Iteraciones del método de Newton–Raphson para \(f(S)=S-30\).}
+\end{table}
+
+\subsection*{Código Python}
+
+\begin{tcolorbox}[title=Código Python para sumar múltiplos de 3 con Newton-Raphson,
+                  colback=white,
+                  colframe=black,
+                  breakable,
+                  enhanced]
+\begin{lstlisting}[style=mypython]
+import matplotlib.pyplot as plt
+from tabulate import tabulate
+
+def suma_multiplos_de_3(x):
+    multiplos = [i for i in x if i % 3 == 0]
+    C = sum(multiplos)
+    print(f"Múltiplos de 3 encontrados: {multiplos}")
+    print(f"Suma real de múltiplos de 3: {C}")
+
+    def f(S): return S - C
+    def df(S): return 1
+
+    S0 = 0
+    tol = 1e-6
+    iteraciones = []
+
+    for i in range(10):
+        fS = f(S0)
+        S1 = S0 - fS/df(S0)
+        iteraciones.append([i, S0, fS, S1])
+        if abs(S1 - S0) < tol:
+            break
+        S0 = S1
+
+    print(tabulate(iteraciones,
+                   headers=["Iteración","S_n","f(S_n)","S_{n+1}"],
+                   tablefmt="fancy_grid"))
+
+    # Gráfica
+    S_vals = list(range(-5, 41))
+    f_vals = [f(S) for S in S_vals]
+
+    plt.figure(figsize=(10,6))
+    plt.axhline(0, color='black', linewidth=0.8)
+    plt.axvline(0, color='black', linewidth=0.8)
+    plt.plot(S_vals, f_vals, label='f(S)=S-30', color='blue')
+    plt.plot(S_vals, f_vals, '--', color='red', label='Tangente en S₀')
+    plt.plot(0, f(0), 'ro', label='S₀ = 0')
+    plt.plot(C, 0, 'go', label='Raíz S = 30')
+    plt.xlabel('S')
+    plt.ylabel('f(S)')
+    plt.title('Gráfica de f(S)=S-30 con Newton–Raphson')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+    return S1
+
+# Ejecución
+x = [2, 3, 5, 6, 9, 11, 12]
+S_final = suma_multiplos_de_3(x)
+print(f"\nResultado final: {S_final}")
+\end{lstlisting}
+\end{tcolorbox}
+
+
+\subsection*{Resultado final}
+
+El método converge a la raíz:
+\[
+S = 30,
+\]
+que corresponde a la suma correcta de los múltiplos de 3 en el vector original.
+
+
+
+
+
+
+
+
+%-------------------------------------------------35
+
+\section*{Problema 35}
+Usar el método de Newton para hallar la solución de la ecuación:
+\[x + 1 + \ln(2x+3) = 0\]
+Con un punto inicial igual a 0 y un error de 0.00001.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.8\textwidth,
+    height=0.6\textwidth,
+    axis lines = middle,
+    xlabel = $x$,
+    ylabel = $f(x)$,
+    xmin = -1.5,
+    xmax = 1,
+    ymin = -2,
+    ymax = 4,
+    grid = both,
+    grid style = {dashed, gray!30},
+    title = {Gráfica de $f(x) = x + 1 + \ln(2x + 3)$},
+    legend pos = north west,
+]
+
+% Definición de la función
+\addplot [
+    domain=-1.4:1,
+    samples=200,
+    color=blue,
+    thick,
+] {x + 1 + ln(2*x + 3)};
+\addlegendentry{$f(x) = x + 1 + \ln(2x+3)$}
+
+% Línea horizontal en y=0
+\addplot [
+    black,
+    dashed,
+    thick
+] coordinates {(-1.5,0)(1,0)};
+
+% Punto inicial x0 = 0
+\addplot [
+    only marks,
+    mark=*,
+    color=green,
+    mark size=3pt
+] coordinates {(0, {0 + 1 + ln(2*0 + 3)})};
+\addlegendentry{Punto inicial $x_0 = 0$}
+
+% Raíz visual aproximada
+\addplot [
+    only marks,
+    mark=*,
+    color=red,
+    mark size=3pt
+] coordinates {(-1.000061,0)};
+\addlegendentry{Raíz visual aproximada}
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{a) Función y su derivada}
+\begin{flalign*}
+f(x) &= x + 1 + \ln(2x+3) &\\
+f'(x) &= 1 + \frac{2}{2x+3} &
+\end{flalign*}
+
+\subsection*{b) Cálculo de la raíz con precisión}
+
+Fórmula de iteración:
+\[
+x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
+\]
+
+\begin{flalign*}
+\text{Iteración 0 } (x_0 = 0): & &\\
+f(0) &= 0 + 1 + \ln(2\cdot0+3) = 1 + \ln(3) \approx 2.098612 &\\
+f'(0) &= 1 + \frac{2}{2\cdot0+3} = 1 + \frac{2}{3} \approx 1.666667 &\\
+x_1 &= 0 - \frac{2.098612}{1.666667} \approx -1.259167 &\\
+\epsilon_1 &= \left|\frac{x_1 - x_0}{x_1}\right| = \left|\frac{-1.259167 - 0}{-1.259167}\right| \approx 1.000000 &
+\end{flalign*}
+
+\begin{flalign*}
+\text{Iteración 1: } & &\\
+f(-1.259167) &= -1.259167 + 1 + \ln(2\cdot(-1.259167)+3) \approx -0.259167 + \ln(0.481666) \approx -0.989633 &\\
+f'(-1.259167) &= 1 + \frac{2}{2\cdot(-1.259167)+3} \approx 1 + \frac{2}{0.481666} \approx 5.152254 &\\
+x_2 &= -1.259167 - \frac{-0.989633}{5.152254} \approx -1.067081 &\\
+\epsilon_2 &= \left|\frac{x_2 - x_1}{x_2}\right| = \left|\frac{-1.067081 - (-1.259167)}{-1.067081}\right| \approx 0.179933 &
+\end{flalign*}
+
+\begin{flalign*}
+\text{Iteración 2: } & &\\
+f(-1.067081) &= -1.067081 + 1 + \ln(2\cdot(-1.067081)+3) \approx -0.067081 + \ln(0.865838) \approx -0.211093 &\\
+f'(-1.067081) &= 1 + \frac{2}{2\cdot(-1.067081)+3} \approx 1 + \frac{2}{0.865838} \approx 3.309900 &\\
+x_3 &= -1.067081 - \frac{-0.211093}{3.309900} \approx -1.003291 &\\
+\epsilon_3 &= \left|\frac{x_3 - x_2}{x_3}\right| = \left|\frac{-1.003291 - (-1.067081)}{-1.003291}\right| \approx 0.063600 &
+\end{flalign*}
+
+\subsection*{c) Tabla de iteraciones}
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+$i$ & $x_i$ & $x_{i+1}$ & $\varepsilon_{\text{rel}}$ \\
+\midrule
+0 & 0.000000 & -1.259167 & 1.000000 \\
+1 & -1.259167 & -1.067081 & 0.179933 \\
+2 & -1.067081 & -1.003291 & 0.063600 \\
+3 & -1.003291 & -1.000069 & 0.003215 \\
+4 & -1.000069 & -1.000061 & 0.000008 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{d) Gráfico del método}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.8\textwidth,
+    height=0.6\textwidth,
+    axis lines = middle,
+    xlabel = $x$,
+    ylabel = $f(x)$,
+    xmin = -1.5,
+    xmax = 0.5,
+    ymin = -2,
+    ymax = 3,
+    grid = both,
+    grid style = {dashed, gray!30},
+    title = {Método de Newton: Búsqueda de Raíz},
+    legend pos = north west,
+]
+
+% Definición de la función
+\addplot [
+    domain=-1.5:0.5,
+    samples=200,
+    color=blue,
+    thick,
+] {x + 1 + ln(2*x + 3)};
+\addlegendentry{$f(x) = x + 1 + \ln(2x+3)$}
+
+% Línea horizontal en y=0
+\addplot [
+    black,
+    dashed,
+    thick
+] coordinates {(-1.5,0)(0.5,0)};
+
+% Raíz aproximada
+\addplot [
+    only marks,
+    mark=*,
+    color=red,
+    mark size=3pt
+] coordinates {(-1.000061,0)};
+\addlegendentry{Raíz aproximada: $-1.000061$}
+
+% Línea vertical punteada desde la raíz hasta la función
+\addplot [
+    red,
+    dashed,
+    thick
+] coordinates {(-1.000061,0)(-1.000061,{ -1.000061 + 1 + ln(2*(-1.000061) + 3 )})};
+
+% Etiqueta de la raíz
+\node at (axis cs: -0.9,0.5) [
+    draw=red,
+    fill=white,
+    rounded corners,
+    inner sep=2pt
+] {Raíz en $x \approx -1.000061$};
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{tcolorbox}[title=Código Python: Método de Newton para $f(x) = x + 1 + \ln(2x + 3)$, 
+                  colback=white, colframe=black, breakable, enhanced]
+\begin{lstlisting}[style=mypython]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Definición de las funciones
+f = lambda x: x + 1 + np.log(2*x + 3)
+f_prime = lambda x: 1 + 2/(2*x + 3)
+
+def newton(x0, tol=1e-5, max_iter=100):
+    results = []
+    x = x0
+    for i in range(max_iter):
+        fx = f(x)
+        fpx = f_prime(x)
+        x_new = x - fx/fpx
+        error = abs((x_new - x)/x_new)
+        results.append([i, x, x_new, error])
+        if error < tol: 
+            break
+        x = x_new
+    return results
+
+# Ejecución del método
+res = newton(0.0)
+root = res[-1][2]  # Última aproximación
+
+# Tabla de resultados
+print("\nTabla de Iteraciones:")
+print("-"*55)
+print(f"{'Iteración':<10}{'x_i':<15}{'x_i+1':<15}{'Error':<15}")
+for r in res:
+    print(f"{r[0]:<10}{r[1]:<15.6f}{r[2]:<15.6f}{r[3]:<15.6f}")
+
+# Gráfico
+x_vals = np.linspace(-1.5, 0.5, 400)
+y_vals = f(x_vals)
+
+plt.figure(figsize=(10,6))
+plt.plot(x_vals, y_vals, 'b-', label='f(x) = x + 1 + ln(2x+3)')
+plt.axhline(0, color='k', linestyle='--', linewidth=0.8)
+plt.scatter(root, 0, c='r', s=100, label=f'Raíz: {root:.6f}')
+plt.vlines(root, plt.ylim()[0], 0, colors='r', linestyles='dashed')
+plt.title('Método de Newton: Búsqueda de Raíz')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.legend()
+plt.grid(alpha=0.3)
+plt.xlim(-1.5, 0.5)
+plt.ylim(-2, 3)
+plt.text(root+0.05, 0.5, f'Raíz en x = {root:.6f}', 
+         color='r', fontsize=10, bbox=dict(facecolor='white', alpha=0.8))
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+\end{tcolorbox}
+
+
+
+
+
+
+
+
+
+
+
+%------------------------------------------------
+
+\section*{Resolución ejercicio 35 de una raíz de \(\sin(x)\) con la serie de Taylor y Newton–Raphson}
+
+\subsection*{1. Replanteamiento del problema}
+
+Queremos encontrar una raíz de \(\sin(x)\) usando su serie de Taylor truncada con \(n=4\):
+
+\[
+f(x) = x - \frac{x^3}{6} + \frac{x^5}{120} - \frac{x^7}{5040},
+\qquad
+f'(x) = 1 - \frac{x^2}{2} + \frac{x^4}{24} - \frac{x^6}{720}.
+\]
+
+Buscaremos la raíz en \([3,4]\), donde sabemos que \(\sin(x)\) se anula (en \(x\approx\pi\)).
+
+\subsection*{2. Método de Newton–Raphson}
+
+La iteración es
+
+\[
+x_{k+1} = x_k - \frac{f(x_k)}{f'(x_k)}.
+\]
+
+\subsection*{3. Iteraciones paso a paso}
+
+\paragraph{Iteración 0.}
+\[
+x_0 = 3.0000,\quad
+f(x_0)=3 - \frac{3^3}{6} + \frac{3^5}{120} - \frac{3^7}{5040}
+=0.09107,\quad
+f'(x_0)=-1.1375,
+\]
+\[
+x_1 = 3 - \frac{0.09107}{-1.1375} = 3.0801.
+\]
+
+\paragraph{Iteración 1.}
+\[
+x_1 = 3.0801,\quad
+f(x_1)\approx -0.00270,\quad
+f'(x_1)\approx 0.8200,
+\]
+\[
+x_2 = 3.0801 - \frac{-0.00270}{0.8200} = 3.0834.
+\]
+
+\paragraph{Iteración 2.}
+\[
+x_2 = 3.0834,\quad
+f(x_2)\approx 0.00001,\quad
+f'(x_2)\approx 0.7960,
+\]
+\[
+x_3 = 3.0834 - \frac{0.00001}{0.7960} \approx 3.0833\quad(\text{convergencia}).
+\]
+
+\subsection*{4. Tabla de iteraciones}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cccc}
+\toprule
+\(k\) & \(x_k\) & \(f(x_k)\) & \(f'(x_k)\) \\
+\midrule
+0 & 3.0000 & 0.09107 & -1.1375 \\
+1 & 3.0801 & -0.00270 & 0.8200  \\
+2 & 3.0834 & 0.00001  & 0.7960  \\
+\bottomrule
+\end{tabular}
+\caption{Iteraciones detalladas del método de Newton–Raphson}
+\end{table}
+
+\subsection*{5. Gráfica de la función y tangentes}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \begin{axis}[
+    width=12cm, height=8cm,
+    axis lines=middle,
+    xlabel={$x$}, ylabel={$y$},
+    xmin=2.5, xmax=3.5,
+    ymin=-1.5, ymax=1.5,
+    samples=300,
+    legend pos=outer north east,
+    grid=major
+  ]
+    \addplot[blue, thick, domain=2.5:3.5]
+      {x - x^3/6 + x^5/120 - x^7/5040};
+    \addlegendentry{\(S_4(x)\)}
+
+    \addplot[red, dashed, domain=2.8:3.2]
+      {0.09107 + (-1.1375)*(x-3)};
+    \addlegendentry{Tangente en \(x_0=3\)}
+
+    \addplot[mark=*, only marks, mark size=2pt]
+      coordinates {(3.1416,0)};
+    \addlegendentry{Raíz \(\approx\pi\)}
+  \end{axis}
+\end{tikzpicture}
+\caption{Gráfica de \(S_4(x)\) y tangente en \(x_0=3\)}
+\end{figure}
+
+\subsection*{6. Código Python}
+
+\begin{tcolorbox}[title=Código Python para el método de Newton–Raphson,
+                  colback=white,
+                  colframe=black,
+                  breakable, enhanced]
+\begin{lstlisting}[style=mypython]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Serie truncada S4(x)
+def S4(x):
+    return x - x**3/6 + x**5/120 - x**7/5040
+
+# Derivada de S4(x)
+def S4_prime(x):
+    return 1 - x**2/2 + x**4/24 - x**6/720
+
+# Método de Newton–Raphson
+def newton_raphson(f, df, x0, tol=1e-8, max_iter=10):
+    iteraciones = []
+    for i in range(max_iter):
+        fx = f(x0)
+        dfx = df(x0)
+        iteraciones.append((i, x0, fx, dfx))
+        if abs(fx) < tol:
+            break
+        x0 = x0 - fx/dfx
+    return iteraciones
+
+# Ejecución
+x0 = 3.0
+resultados = newton_raphson(S4, S4_prime, x0)
+
+# Impresión de resultados
+for k, x, fx, dfx in resultados:
+    print(f"Iteración {k}: x={x:.6f}, f(x)={fx:.6e}, f'(x)={dfx:.6f}")
+
+# Gráfica final
+x_vals = np.linspace(2.5, 3.5, 400)
+y_vals = S4(x_vals)
+plt.figure(figsize=(10,6))
+plt.plot(x_vals, y_vals, label='S4(x)')
+plt.axhline(0, color='black', lw=0.5)
+for k, x, fx, dfx in resultados[:-1]:
+    plt.plot(x_vals, fx + dfx*(x_vals-x), '--', label=f'Tangente x={x:.2f}')
+xr = resultados[-1][1]
+plt.plot(xr, S4(xr), 'ro', label='Raíz')
+plt.xlabel('x'); plt.ylabel('S4(x)')
+plt.title('Newton–Raphson con S4(x)')
+plt.legend(); plt.grid(); plt.show()
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsection*{7. Respuesta final}
+
+La raíz encontrada fue:
+
+\[
+\boxed{x \approx 3.14159265},
+\]
+
+que aproxima muy bien a \(\pi\).
+
+
+
+
+
+%---------------ejercicio 40
+
+
+
+
+
+
+\section*{Ejercicio 40: Resolución numérica con Newton–Raphson}
+
+\subsection*{1. Planteamiento del problema}
+
+Se tiene un resorte conectado desde el punto fijo \(B\) (a \(300\,\mathrm{mm}\) de altura) al collar \(A\), que se encuentra a una distancia horizontal \(c\). El resorte no está deformado cuando \(c = 0\). Para mantener el sistema en equilibrio, se requiere una fuerza \(F\):
+
+\[
+F(c) = k \,\bigl(\sqrt{c^2 + h^2} - h\bigr)\,\frac{c}{\sqrt{c^2 + h^2}}
+\]
+
+donde \(k\) es la constante del resorte y \(h = 300\,\mathrm{mm}\).
+
+\subsection*{2. Ecuación no lineal}
+
+Dada una fuerza \(F_0\) conocida, buscamos el valor de \(c\) tal que:
+
+\[
+f(c) = k \left(\sqrt{c^2 + h^2} - h\right)\frac{c}{\sqrt{c^2 + h^2}} - F_0 = 0
+\]
+
+Con \(k = 2\,\mathrm{N/mm}\), \(F_0 = 1\,\mathrm{N}\), \(h = 300\,\mathrm{mm}\).
+
+\subsection*{3. Método de Newton–Raphson}
+
+La fórmula general es:
+
+\[
+c_{n+1} = c_n - \frac{f(c_n)}{f'(c_n)}
+\]
+
+donde
+
+\[
+f(c) = 2\bigl(\sqrt{c^2 + h^2} - h\bigr)\frac{c}{\sqrt{c^2 + h^2}} - 1,
+\qquad
+f'(c) = 2\Biggl[\frac{\sqrt{c^2+h^2}-h}{\sqrt{c^2+h^2}} + \frac{c\,h^2}{(\sqrt{c^2+h^2})^3}\Biggr].
+\]
+
+\subsection*{4. Iteraciones paso a paso}
+
+\textbf{Iteración 0:} Elegimos \(c_0 = 100\,\mathrm{mm}\)
+
+\begin{align*}
+L_0 &= \sqrt{100^2 + 300^2} = 316.23\,\mathrm{mm},\\
+f(c_0) &= 2\,(L_0 - 300)\,\frac{100}{L_0} - 1 \approx 0.026,\\
+f'(c_0) &= 2\Bigl[\tfrac{L_0-300}{L_0} + \tfrac{100\cdot300^2}{L_0^3}\Bigr]\approx1.3321,\\
+c_1 &= 100 - \frac{0.026}{1.3321} \approx 99.805\,\mathrm{mm}.
+\end{align*}
+
+\textbf{Iteración 1:} \(c_1 = 99.805\,\mathrm{mm}\)
+
+\begin{align*}
+L_1 &= \sqrt{99.805^2 + 300^2} \approx 316.20,\\
+f(c_1) &= 2\,(L_1 - 300)\,\frac{99.805}{L_1} - 1 \approx 0.00041,\\
+f'(c_1) &\approx 1.331,\\
+c_2 &= 99.805 - \frac{0.00041}{1.331} \approx 99.605\,\mathrm{mm}.
+\end{align*}
+
+\textbf{Iteración 2:} \(c_2 = 99.605\,\mathrm{mm}\)
+
+\begin{align*}
+L_2 &= \sqrt{99.605^2 + 300^2} \approx 316.17,\\
+f(c_2) &\approx 2\,(L_2 - 300)\,\frac{99.605}{L_2} - 1 \approx 3.5\times10^{-6},\\
+f'(c_2) &\approx 1.331,\\
+c_3 &= 99.605 - \frac{3.5\times10^{-6}}{1.331} \approx 99.602\,\mathrm{mm}.
+\end{align*}
+
+\subsection*{5. Tabla de convergencia}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccc@{}}
+\toprule
+Iteración & \(c_n\) (mm) & \(f(c_n)\) & Error absoluto (mm) \\ \midrule
+0 & 100.000 & 0.026000          & —     \\
+1 &  99.805 & 0.000410          & 0.195 \\
+2 &  99.605 & \(3.5\times10^{-6}\) & 0.200 \\
+3 &  99.602 & \(\sim0\)         & 0.003 \\
+\bottomrule
+\end{tabular}
+\caption{Convergencia del método de Newton–Raphson}
+\end{table}
+
+\subsection*{6. Gráfica de \(F(c)\) para distintos valores de \(k\)}
+
+\[
+F(c) = k\bigl(\sqrt{c^2 + h^2}-h\bigr)\frac{c}{\sqrt{c^2 + h^2}},\quad h=300\,\mathrm{mm}.
+\]
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm, height=8cm,
+    xlabel={$c$ [mm]}, ylabel={$F(c)$ [N]},
+    grid=major, domain=0:600, samples=200,
+    legend pos=north west
+]
+\addplot[blue, thick]  {2*(sqrt(x^2+300^2)-300)*x/sqrt(x^2+300^2)}; \addlegendentry{\(k=2\)} 
+\addplot[red, dashed] {4*(sqrt(x^2+300^2)-300)*x/sqrt(x^2+300^2)}; \addlegendentry{\(k=4\)} 
+\end{axis}
+\end{tikzpicture}
+\caption{Gráfica de \(F(c)\) para diferentes constantes \(k\).}
+\end{figure}
+
+\subsection*{7. Código Python}
+
+\begin{tcolorbox}[breakable, listing only, listing options={style=mypython}, colback=white, colframe=black]
+import numpy as np
+import matplotlib.pyplot as plt
+
+def F(c, k, h=300):
+    L = np.sqrt(c**2 + h**2)
+    return k * (L - h) * (c / L)
+
+def newton(f, df, c0, tol=1e-6, max_iter=10):
+    for i in range(max_iter):
+        fc = f(c0)
+        dcf = df(c0)
+        c1 = c0 - fc/ dcf
+        if abs(c1 - c0) < tol:
+            return c1
+        c0 = c1
+    return c0
+
+k, F0, h = 2, 1, 300
+f  = lambda c: F(c, k, h) - F0
+df = lambda c: 2*((np.sqrt(c**2+h**2)-h)/np.sqrt(c**2+h**2)
+                 + c*h**2/np.sqrt(c**2+h**2)**3)
+
+c_root = newton(f, df, 100.0)
+print(f"Raíz c ≈ {c_root:.3f} mm")
+
+c_vals = np.linspace(0,600,300)
+plt.plot(c_vals, F(c_vals,k), label='k=2')
+plt.plot(c_vals, F(c_vals,4),'--',label='k=4')
+plt.axhline(1,color='black',lw=0.5)
+plt.xlabel('c [mm]'); plt.ylabel('F(c) [N]')
+plt.legend(); plt.grid(); plt.show()
+\end{tcolorbox}
+
+\subsection*{8. Resultado final}
+
+La raíz encontrada es:
+
+\[
+\boxed{c \approx 99.602\,\mathrm{mm}},
+\]
+
+que equilibra el sistema con \(k=2\,\mathrm{N/mm}\) y \(F_0=1\,\mathrm{N}\).
+
+
+
+
+
+
+
+
+
+%----------------------------ejercicio 40  y demas   
+
+\section{*PROBLEMA 40}
+
+
+Usar el método de Newton para hallar la abscisa del punto de intersección de las funciones: 
+$f(x)=2-x$, $g(x)=\ln(2x+5)$ \hspace{2em} (Página 76)
+\ Con un valor inicial igual a 0 y error 0.0001
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			width=0.8\textwidth,
+			height=6cm,
+			xmin=-2.5, xmax=3,
+			ymin=-2, ymax=4,
+			axis lines=middle,
+			xlabel=$x$,
+			ylabel=$y$,
+			grid=both,
+			title={Intersección de $f(x) = 2 - x$ y $g(x) = \ln(2x + 5)$},
+			legend pos=north east,
+			]
+			\addplot[blue, domain=-2.49:3, samples=100, smooth] {2 - x};
+			\addplot[green, domain=-2.49:3, samples=100, smooth] {ln(2*x + 5)};
+			\addplot[black, dashed] coordinates {(-2.5,0)(3,0)};
+			\addplot[black, dashed] coordinates {(0,-2)(0,4)};
+			\legend{$f(x) = 2 - x$, $g(x) = \ln(2x + 5)$}
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+
+a) Función de intersección:
+\begin{flalign*}
+	&h(x) = 2 - x - \ln(2x + 5) &\\
+	&h'(x) = -1 - \frac{2}{2x + 5} &
+\end{flalign*}
+
+\vspace{0.5cm}
+
+\noindent\textbf{b) Cálculo de la raíz}
+
+\noindent\textbf{Iteración 0} \;($x_0 = 0$):
+\[
+\begin{aligned}
+x_{n+1} &= x_n - \frac{f(x_n)}{f'(x_n)}, \\[0.5ex]
+h(0)     &= 2 - \ln(5) \approx 0.390562,\\
+h'(0)    &= -1 - \frac{2}{5} = -1.4,\\
+x_{1}    &= 0 - \frac{0.390562}{-1.4} \approx 0.278973,\\
+\varepsilon_r
+         &= \Bigl|\tfrac{x_{1}-x_0}{x_{1}}\Bigr|
+         = \frac{0.278973}{0.278973}
+         \approx 1.000000.
+\end{aligned}
+\]
+
+
+\begin{flalign*}
+	\text{Iteración 1:} & &\\
+	&h(0.278973) = 2 - 0.278973 - \ln(2(0.278973) + 5) \approx 2 - 0.278973 - \ln(5.557946) \approx -0.005799 &\\
+	&h'(0.278973) = -1 - \frac{2}{2(0.278973) + 5} = -1 - \frac{2}{5.557946} \approx -1.359845 &\\
+	&x_2 = 0.278973 - \frac{-0.005799}{-1.359845} \approx 0.274708 &\\
+	&\varepsilon_r = \left|\frac{0.274708 - 0.278973}{0.274708}\right| \approx 0.015525 &
+\end{flalign*}
+
+\begin{flalign*}
+	\text{Iteración 2:} & &\\
+	&h(0.274708) = 2 - 0.274708 - \ln(2(0.274708) + 5) \approx 2 - 0.274708 - \ln(5.549416) \approx 0.000006 &\\
+	&h'(0.274708) = -1 - \frac{2}{2(0.274708) + 5} = -1 - \frac{2}{5.549416} \approx -1.360348 &\\
+	&x_3 = 0.274708 - \frac{0.000006}{-1.360348} \approx 0.274708 &\\
+	&\varepsilon_r = \left|\frac{0.274708 - 0.274708}{0.274708}\right| \approx 0.000000 &
+\end{flalign*}
+
+\vspace{1cm}
+
+c) Tabla de iteraciones:
+
+\begin{center}
+	\begin{tabular}{cccccc}
+		\toprule
+		Iteración & $x_n$ & $h(x_n)$ & $h'(x_n)$ & $x_{n+1}$ & $\varepsilon_r$ \\
+		\midrule
+		0 & 0.000000 & 0.390562 & -1.400000 & 0.278973 & 1.000000 \\
+		1 & 0.278973 & -0.005799 & -1.359845 & 0.274708 & 0.015525 \\
+		2 & 0.274708 & 0.000006 & -1.360348 & 0.274708 & 0.000000 \\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			width=0.8\textwidth,
+			height=6cm,
+			xmin=-0.5, xmax=1,
+			ymin=-0.5, ymax=1,
+			axis lines=middle,
+			xlabel=$x$,
+			ylabel=$h(x)$,
+			grid=both,
+			title={Método de Newton para encontrar la raíz de $h(x) = 2 - x - \ln(2x + 5)$}
+			]
+			\addplot[blue, domain=-0.3:1, samples=100, smooth] {2 - x - ln(2*x + 5)};
+			\addplot[red, only marks, mark=*] coordinates {(0.274708, 0)};
+			\node at (axis cs:0.4,0.2) {\textcolor{red}{Raíz encontrada: $x \approx 0.274708$}};
+			\draw[dashed] (0.274708, -0.02) -- (0.274708, 0.02);
+		\end{axis}
+	\end{tikzpicture}
+	
+	\vspace{1cm}
+	
+	\section*{Código Python para el Método de Newton}
+	
+	A continuación se muestra el código Python:
+	
+
+\end{center}
+    
+    
+
+\begin{tcolorbox}[title=Método de Newton,
+                  colback=white,
+                  colframe=black,
+                  breakable, enhanced]
+\begin{lstlisting}[style=mypython]
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Función y derivada
+h = lambda x: 2 - x - np.log(2*x + 5)
+h_prime = lambda x: -1 - 2/(2*x + 5)
+
+# Método de Newton reducido
+def newton(x, tol=1e-6, max_iter=100):
+    for i in range(max_iter):
+        x_new = x - h(x)/h_prime(x)
+        err = abs((x_new - x)/x_new)
+        print(f"{i:<2} x = {x:<.6f} → x_new = {x_new:<.6f}, error = {err:<.2e}")
+        if err < tol: break
+        x = x_new
+    return x_new
+
+# Ejecutar
+x0 = 0
+raiz = newton(x0)
+
+# Gráfica
+x_vals = np.linspace(-2, 2, 400)
+plt.plot(x_vals, h(x_vals), label='h(x) = 2 - x - ln(2x + 5)')
+plt.axhline(0, color='black', lw=0.5)
+plt.scatter(raiz, 0, color='red', label=f'Raíz: x ≈ {raiz:.6f}')
+plt.legend(), plt.grid(True)
+plt.title("Raíz con método de Newton"), plt.xlabel("x"), plt.ylabel("h(x)")
+plt.show()		
+\end{lstlisting}
+\end{tcolorbox}
+
+
+\ IV. Cada grupo debe elaborar una aplicacion por cada metodo y resolverlos. Estas aplica-
+ciones deben ejecutarse Python, presentando una tabla con las iteraciones segun la tolerancia
+o error pedido, junto con la solucion y un grafico.
+
+1) Encontrar la raíz de la ecuación no lineal: $\ln(x^2+1)+e^{-x}-\cos(x)-0.2=0$ utilizando el método de la bisección para aproximar una solución con una tolerancia de error de $10^{-5}$ en el intervalo $[0.6; 0.8]$.
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			width=12cm,
+			height=6cm,
+			xmin=0.5, xmax=1,
+			ymin=-0.2, ymax=0.1,
+			axis lines=left,
+			xlabel=$x$,
+			ylabel=$f(x)$,
+			grid=both,
+			title={Gráfica de $f(x) = \ln(x^2 + 1) + e^{-x} - \cos(x) - 0.2$},
+			legend pos=south east,
+			]
+			\addplot[purple, domain=0.6:0.8, samples=400] {ln(x^2 + 1) + exp(-x) - cos(deg(x)) - 0.2};
+			\addplot[black, dashed] coordinates {(0.5,0) (1,0)};
+			\addplot[red, only marks] coordinates {(0.761060, 0)};
+			\addplot[dashed, gray] coordinates {(0.6, -0.2) (0.6, 0.1)};
+			\addplot[dashed, gray] coordinates {(0.8, -0.2) (0.8, 0.1)};
+			\legend{$f(x)$, $y=0$, Raíz visual, Intervalo inicial}
+			\node[red] at (axis cs:0.7, -0.05) {Raíz visual: $x \approx 0.76106$};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+$F(x)=\ln(x^2+1)+e^{-x}-\cos(x)-0.2=0$
+
+$F(0.6)=\ln(0.6^2+1)+e^{-0.6}-\cos(0.6)-0.2=-0.169039$
+
+$F(0.8)=\ln(0.8^2+1)+e^{-0.8}-\cos(0.8)-0.2=0.047318$
+
+$F(0.6)\cdot F(0.8)<0$ converge
+
+$n\geq\frac{\ln(0.8-0.6)}{10^{-5}}=14.28 \Rightarrow 15$ iteraciones
+
+$x_{i+1}=\frac{x_a+x_b}{2}$
+
+\vspace{0.5cm}
+Para $i=1$:
+
+$x_2=\frac{0.6+0.8}{2}=0.7 \qquad E_r:\left|\frac{x_{i+1}-x_i}{x_{i+1}}\right|$
+
+$F(0.7)=\ln(0.7^2+1)+e^{-0.7}-\cos(0.7)-0.2=-0.069480<0$
+
+$F(0.7)\cdot F(0.8)<0$ converge
+
+\vspace{0.5cm}
+Para $i=2$ Nuevo intervalo $[0.7;0.8]$:
+
+$x_3=\frac{0.7+0.8}{2}=0.75 \qquad E_r:\left|\frac{0.75-0.8}{0.75}\right|=0.066666$
+
+$F(0.75)=\ln(0.75^2+1)+e^{-0.75}-\cos(0.75)-0.2=-0.013035<0$
+
+$F(0.75)\cdot F(0.8)<0$ converge
+
+\vspace{0.5cm}
+Para $i=3$ Nuevo intervalo $[0.75;0.8]$:
+
+$x_4=\frac{0.75+0.8}{2}=0.775 \qquad E_r:\left|\frac{0.775-0.75}{0.775}\right|=0.032258$
+
+$F(0.775)=\ln(0.775^2+1)+e^{-0.775}-\cos(0.775)-0.2=0.016676>0$
+
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		Iteración & $a$      & $b$      & $x$      & $F(x)$     & Error Relativo \\ \hline
+		1         & 0.600000 & 0.800000 & 0.700000 & -0.069480  & -              \\ \hline
+		2         & 0.700000 & 0.800000 & 0.750000 & -0.013035  & 0.066667       \\ \hline
+		3         & 0.750000 & 0.800000 & 0.775000 & 0.016676   & 0.032258       \\ \hline
+		4         & 0.750000 & 0.775000 & 0.762500 & 0.001715   & 0.016393       \\ \hline
+		5         & 0.750000 & 0.762500 & 0.756250 & -0.005688  & 0.008264       \\ \hline
+		6         & 0.756250 & 0.762500 & 0.759375 & -0.001994  & 0.004115       \\ \hline
+		7         & 0.759375 & 0.762500 & 0.760938 & -0.000141  & 0.002057       \\ \hline
+		8         & 0.760938 & 0.762500 & 0.761719 & 0.000786   & 0.001028       \\ \hline
+		9         & 0.760938 & 0.761719 & 0.761328 & 0.000322   & 0.000514       \\ \hline
+		10        & 0.760938 & 0.761328 & 0.761133 & 0.000090   & 0.000257       \\ \hline
+		11        & 0.760938 & 0.761133 & 0.761035 & -0.000026  & 0.000129       \\ \hline
+		12        & 0.761035 & 0.761133 & 0.761084 & 0.000032   & 0.000064       \\ \hline
+		13        & 0.761035 & 0.761084 & 0.761060 & 0.000003   & 0.000032       \\ \hline
+		14        & 0.761035 & 0.761060 & 0.761047 & -0.000012  & 0.000016       \\ \hline
+		15        & 0.761047 & 0.761060 & 0.761054 & -0.000005  & 0.000008       \\ \hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			width=12cm,
+			height=6cm,
+			xmin=0.5, xmax=1,
+			ymin=-0.2, ymax=0.1,
+			axis lines=left,
+			xlabel=$x$,
+			ylabel=$F(x)$,
+			grid=both,
+			title={Método de Bisección: Convergencia a la raíz},
+			legend pos=south east,
+			]
+			\addplot[blue, domain=0.5:1, samples=400] {ln(x^2 + 1) + exp(-x) - cos(deg(x)) - 0.2};
+			\addplot[red, only marks] coordinates {(0.761060, 0.000003)};
+			\addplot[dashed, gray] coordinates {(0.6, -0.2) (0.6, 0.1)};
+			\addplot[dashed, gray] coordinates {(0.8, -0.2) (0.8, 0.1)};
+			\node[red] at (axis cs:0.77, -0.05) {Raíz: $x \approx 0.76106$};
+			\legend{$F(x)$, Raíz encontrada, Intervalo inicial}
+		\end{axis}
+	\end{tikzpicture}
+\vspace{1cm}
+
+\section*{Código Python para el Método de la bisección}
+
+A continuación se muestra el código Python:
+
+\begin{tcolorbox}[title=Método de la bisección,
+                  colback=white,
+                  colframe=black,
+                  breakable, enhanced]
+\begin{lstlisting}[style=mypython]
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+f = lambda x: np.log(x**2 + 1) + np.exp(-x) - np.cos(x) - 0.2
+
+a, b, tol, max_iter = 0.6, 0.8, 1e-5, 15
+resultados = []
+
+for i in range(1, max_iter + 1):
+    x = (a + b) / 2
+    fx = f(x)
+    err = abs((x - resultados[-1][3]) / x) if i > 1 else np.nan
+    resultados.append([i, a, b, x, fx, err])
+    if fx * f(a) < 0: b = x
+    else: a = x
+    if i > 1 and err < tol: break
+
+# Mostrar tabla sin pandas
+print(f"\n{'Iter':<6}{'a':<10}{'b':<10}{'x':<12}{'f(x)':<14}{'Error':<10}")
+print("-" * 60)
+for r in resultados:
+    print(f"{r[0]:<6}{r[1]:<10.6f}{r[2]:<10.6f}{r[3]:<12.6f}{r[4]:<14.6f}{'' if r[5] is np.nan else f'{r[5]:.6f}'}")
+
+# Gráfica
+x_vals = np.linspace(0.5, 1, 400)
+plt.plot(x_vals, f(x_vals), label='f(x)', color='blue')
+plt.axhline(0, color='black', linestyle='--')
+plt.scatter(x, f(x), color='red', label=f'Raíz ≈ {x:.6f}')
+plt.axvline(0.6, color='gray', linestyle=':', alpha=0.5)
+plt.axvline(0.8, color='gray', linestyle=':', alpha=0.5)
+plt.title("Método de Bisección"), plt.xlabel("x"), plt.ylabel("f(x)")
+plt.grid(True, alpha=0.3), plt.legend(), plt.tight_layout()
+plt.show()
+
+\end{lstlisting}
+\end{tcolorbox}
+
+
+2.- Un ingeniero está diseñando un sistema de control automático para una planta industrial. Durante el análisis de estabilidad del sistema, se encuentra con la siguiente ecuación característica que debe resolver para determinar los parámetros críticos de operación:
+
+\[ x^3-2x^2\cos(x)+e^{-x/2}\sin(2x)=0.5 \]
+
+\begin{tikzpicture}
+	\begin{axis}[
+		width=0.8\textwidth,
+		height=0.6\textwidth,
+		axis lines = middle,
+		xlabel = $x$,
+		ylabel = {$f(x)$},
+		xmin = 1,
+		xmax = 2,
+		ymin = -0.5,
+		ymax = 11,
+		grid = both,
+		legend pos = north west,
+		title = {Gr\'afica de $f(x)$ en el intervalo [1, 2]},
+		]
+		
+		\addplot [
+		domain=1:2,
+		samples=200,
+		smooth,
+		thick,
+		blue
+		] {x^3 - 2*x^2*cos(deg(x)) + exp(-x/2)*sin(deg(2*x)) - 0.5};
+		
+		\addplot [
+		only marks,
+		mark=*,
+		black
+		] coordinates {(1, -0.029087) (2, 10.550762)};
+		
+		\addplot [
+		dashed,
+		black
+		] coordinates {(1,0) (2,0)};
+		
+		\node at (axis cs:1.5,5) [blue] {$f(x) = x^3-2x^2\cos(x)+e^{-x/2}\sin(2x)-0.5$};
+		\legend{,,Extremos del intervalo}
+		
+	\end{axis}
+\end{tikzpicture}
+
+Utilice el método de la falsa posición para aproximar la raíz con un error de $10^{-4}$ y con un intervalo $[1,2]$.
+
+\[ f(x)=x^3-2x^2\cos(x)+e^{-x/2}\sin(2x)-0.5=0 \]
+
+\[ f(1)=1^3-2(1)^2\cos(1)+e^{-1/2}\sin(2\cdot1)-0.5=-0.029087 \]
+\[ f(2)=2^3-2(2)^2\cos(2)+e^{-2/2}\sin(2\cdot2)-0.5=10.550762 \]
+
+Fórmula del método:
+\[ x_r = b - \frac{f(b)(a-b)}{f(a)-f(b)} \]
+
+\vspace{0.5cm}
+
+\begin{tabular}{llllll}
+	\toprule
+	Iteración & $a$ & $b$ & $x_r$ & $f(x_r)$ & Error relativo \\
+	\midrule
+	1 & 1.000000 & 2.000000 & 1.002749 & -0.024263 & 0.994517 \\
+	2 & 1.002749 & 2.000000 & 1.004987 & -0.020626 & 0.002227 \\
+	3 & 1.004987 & 2.000000 & 1.006935 & -0.017541 & 0.001935 \\
+	4 & 1.006935 & 2.000000 & 1.008650 & -0.014894 & 0.001700 \\
+	5 & 1.008650 & 2.000000 & 1.010181 & -0.012614 & 0.001515 \\
+	6 & 1.010181 & 2.000000 & 1.011566 & -0.010739 & 0.001370 \\
+	7 & 1.011566 & 2.000000 & 1.012832 & -0.009158 & 0.001250 \\
+	8 & 1.012832 & 2.000000 & 1.013999 & -0.007812 & 0.001151 \\
+	9 & 1.013999 & 2.000000 & 1.015083 & -0.006661 & 0.001068 \\
+	10 & 1.015083 & 2.000000 & 1.016096 & -0.005676 & 0.000997 \\
+	11 & 1.016096 & 2.000000 & 1.017048 & -0.004834 & 0.000936 \\
+	12 & 1.017048 & 2.000000 & 1.017947 & -0.004116 & 0.000883 \\
+	13 & 1.017947 & 2.000000 & 1.018800 & -0.003504 & 0.000837 \\
+	14 & 1.018800 & 2.000000 & 1.019611 & -0.002983 & 0.000796 \\
+	15 & 1.019611 & 2.000000 & 1.020386 & -0.002539 & 0.000760 \\
+	16 & 1.020386 & 2.000000 & 1.021128 & -0.002160 & 0.000727 \\
+	17 & 1.021128 & 2.000000 & 1.021840 & -0.001837 & 0.000698 \\
+	18 & 1.021840 & 2.000000 & 1.022525 & -0.001562 & 0.000671 \\
+	19 & 1.022525 & 2.000000 & 1.023185 & -0.001328 & 0.000646 \\
+	20 & 1.023185 & 2.000000 & 1.023823 & -0.001129 & 0.000624 \\
+	\bottomrule
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tikzpicture}
+	\begin{axis}[
+		width=0.8\textwidth,
+		height=0.6\textwidth,
+		axis lines = middle,
+		xlabel = $x$,
+		ylabel = {$f(x)$},
+		ymin = -1,
+		ymax = 12,
+		grid = both,
+		legend pos = north west
+		]
+		
+		\addplot [
+		domain=0.9:2.1,
+		samples=200,
+		smooth,
+		thick,
+		blue
+		] {x^3 - 2*x^2*cos(deg(x)) + exp(-x/2)*sin(deg(2*x)) - 0.5};
+		
+		\addplot [
+		only marks,
+		mark=*,
+		red,
+		mark size=3pt
+		] coordinates {(1.002749, -0.024263)};
+		
+		\node at (axis cs:1.1,1) [red] {Raíz aproximada: 1.002749};
+		
+		\addplot [
+		dashed,
+		black
+		] coordinates {(0.9,0) (2.1,0)};
+		
+	\end{axis}
+\end{tikzpicture}
+
+\vspace{0.5cm}
+
+
+
+a) Primera iteración con $a=1$ y $b=2$
+
+\[ x_r=1 - \frac{(-0.029087)(2-1)}{10.550762-(-0.029087)}=1.002749 \]
+\[ f(1.002749)=1.002749^3-2(1.002749)^2\cos(1.002749)+e^{-1.002749/2}\sin(2\cdot1.002749)-0.5=-0.024263 \]
+\[ \varepsilon_r=\left|\frac{1.002749-2}{1.002749}\right|=0.994517 \]
+Como $f(1.002749)\cdot f(1) > 0$, el nuevo intervalo es $[1.002749, 2]$
+
+\vspace{0.5cm}
+
+b) Segunda iteración con $a=1.002749$ y $b=2$
+
+\[ x_r=1.002749 - \frac{(-0.024263)(2-1.002749)}{10.550762-(-0.024263)}=1.004987 \]
+\[ f(1.004987)=1.004987^3-2(1.004987)^2\cos(1.004987)+e^{-1.004987/2}\sin(2\cdot1.004987)-0.5=-0.020626 \]
+\[ \varepsilon_r=\left|\frac{1.004987-1.002749}{1.004987}\right|=0.002227 \]
+Como $f(1.004987)\cdot f(1.002749) > 0$, el nuevo intervalo es $[1.004987, 2]$
+
+\vspace{0.5cm}
+
+c) Tercera iteración con $a=1.004987$ y $b=2$
+
+\[ x_r=1.004987 - \frac{(-0.020626)(2-1.004987)}{10.550762-(-0.020626)}=1.006935 \]
+\[ f(1.006935)=1.006935^3-2(1.006935)^2\cos(1.006935)+e^{-1.006935/2}\sin(2\cdot1.006935)-0.5=-0.017541 \]
+\[ \varepsilon_r=\left|\frac{1.006935-1.004987}{1.006935}\right|=0.001935 \]
+Como $f(1.006935)\cdot f(1.004987) > 0$, el nuevo intervalo es $[1.006935, 2]$
+\vspace{1cm}
+
+\section*{Código Python para el Método de la falsa posición}
+
+A continuación se muestra el código Python:
+
+\begin{tcolorbox}[title=Método de la falsa posición,
+                  colback=white,
+                  colframe=black,
+                  breakable, enhanced]
+\begin{lstlisting}[style=mypython]
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+f = lambda x: x**3 - 2*x**2*np.cos(x) + np.exp(-x/2)*np.sin(2*x) - 0.5
+
+def falsa_posicion(a, b, tol=1e-4, max_iter=100):
+    if f(a)*f(b) >= 0:
+        print("No se puede aplicar el método en este intervalo.")
+        return None
+
+    print(f"{'Iter':<5} {'a':<10} {'b':<10} {'xr':<10} {'f(xr)':<10} {'Error':<10}")
+    xr, x_ant = b, b
+    for i in range(1, max_iter + 1):
+        xr = b - f(b)*(a - b)/(f(a) - f(b))
+        err = abs((xr - x_ant)/xr)
+        print(f"{i:<5} {a:<10.6f} {b:<10.6f} {xr:<10.6f} {f(xr):<10.6f} {err:<10.6f}")
+        if f(xr)*f(a) < 0: b = xr
+        else: a = xr
+        if err < tol: break
+        x_ant = xr
+    return xr
+
+a, b = 1, 2
+print("\nMétodo de Falsa Posición para f(x) = x³ - 2x²cos(x) + e^(-x/2)sin(2x) - 0.5")
+raiz = falsa_posicion(a, b)
+
+x_vals = np.linspace(0.9, 2.1, 400)
+plt.plot(x_vals, f(x_vals), label='f(x)')
+plt.axhline(0, color='black', linestyle='--')
+plt.scatter(raiz, f(raiz), color='red', label=f'Raíz ≈ {raiz:.6f}')
+plt.title("Falsa Posición"), plt.xlabel("x"), plt.ylabel("f(x)")
+plt.grid(True), plt.legend(), plt.tight_layout()
+plt.show()
+
+print(f"\nRaíz aproximada: {raiz:.6f}")
+\end{lstlisting}
+\end{tcolorbox}
+
+
+
+3) Encontrar la raíz de la siguiente ecuación no lineal $e^{-x}\cos(x)-x^3+2x=1$ utilizando el método de Newton-Raphson para aproximar la raíz con un error menor a $10^{-4}$ y con un $x_0=1$.
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			width=0.8\textwidth,
+			height=0.6\textwidth,
+			axis lines = middle,
+			xlabel = $x$,
+			ylabel = {$f(x)$},
+			xmin=0.5, xmax=1.5,
+			ymin=-0.5, ymax=0.5,
+			grid=both,
+			grid style={line width=.1pt, draw=gray!10},
+			major grid style={line width=.2pt,draw=gray!50},
+			every axis plot/.append style={thick},
+			title = {Visualización de $f(x)$ y raíz estimada},
+			legend pos = south west
+			]
+			
+			% Función
+			\addplot [blue, domain=0.5:1.5, samples=200] {exp(-x)*cos(deg(x)) - x^3 + 2*x - 1};
+			\addlegendentry{$f(x) = e^{-x}\cos(x) - x^3 + 2x - 1$}
+			
+			% Línea horizontal en y=0
+			\addplot [black, dashed, domain=0.5:1.5] {0};
+			\addlegendentry{Eje $y=0$}
+			
+			% Punto inicial x0 = 1
+			\addplot [only marks, mark=*, green] coordinates {(1, 0.198766)};
+			\addlegendentry{$x_0 = 1$ (Inicial)}
+			
+			% Raíz aproximada
+			\addplot [only marks, mark=*, red, mark size=3pt] coordinates {(1.109491, 0)};
+			\addlegendentry{Raíz aproximada}
+			
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+$f(x)=e^{-x}\cos(x)-x^3+2x-1=0$
+
+$f'(x)=-e^{-x}\cos(x)-e^{-x}\sin(x)-3x^2+2$
+
+$f(1)=e^{-1}\cos(1)-1^3+2(1)-1=0.198766$
+
+$f'(1)=-e^{-1}[\cos(1)+\sin(1)]-3(1)^2+2=-1.508325$
+
+\vspace{0.5cm}
+
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		\textbf{Iteración} & \textbf{$x_i$} & \textbf{$f(x_i)$} & \textbf{$f'(x_i)$} & \textbf{$x_{i+1}$} & \textbf{$E_r$} \\
+		\hline
+		1 & 1.000000 & 0.198766 & -1.508325 & 1.131799 & 0.116435 \\
+		\hline
+		2 & 1.131799 & -0.049103 & -2.297912 & 1.110164 & 0.019470 \\
+		\hline
+		3 & 1.110164 & 0.001439 & -2.139023 & 1.109491 & 0.000606 \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
+a) Cuando $i=1$
+\[x_{i+1}=x_0-\frac{f(x_0)}{f'(x_0)}\]
+\[x_1=1-\frac{0.198766}{-1.508325}=1.131799\]
+
+$f(1.131799)=e^{-1.131799}\cos(1.131799)-1.131799^3+2(1.131799)-1=-0.049103$
+
+$f'(1.131799)=-e^{-1.131799}[\cos(1.131799)+\sin(1.131799)]-3(1.131799)^2+2=-2.297912$
+
+$E_r=\left|\frac{x_{i+1}-x_i}{x_{i+1}}\right|=\left|\frac{1.131799-1}{1.131799}\right|=0.116435$
+
+\vspace{0.5cm}
+
+b) Cuando $i=2$
+\[x_2=1.131799-\frac{-0.049103}{-2.297912}=1.110164\]
+
+$f(1.110164)=e^{-1.110164}\cos(1.110164)-1.110164^3+2(1.110164)-1=0.001439$
+
+$f'(1.110164)=-e^{-1.110164}[\cos(1.110164)+\sin(1.110164)]-3(1.110164)^2+2=-2.139023$
+
+$E_r=\left|\frac{1.110164-1.131799}{1.110164}\right|=0.019470$
+
+\vspace{0.5cm}
+
+c) Cuando $i=3$
+\[x_3=1.110164-\frac{0.001439}{-2.139023}=1.109491\]
+
+$f(1.109491)=e^{-1.109491}\cos(1.109491)-1.109491^3+2(1.109491)-1=-0.000001$
+
+$f'(1.109491)=-e^{-1.109491}[\cos(1.109491)+\sin(1.109491)]-3(1.109491)^2+2=-2.139439$
+
+$E_r=\left|\frac{1.109491-1.110164}{1.109491}\right|=0.000606$
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			width=0.8\textwidth,
+			height=0.6\textwidth,
+			axis lines = middle,
+			xlabel = $x$,
+			ylabel = {$f(x)$},
+			xmin=0.5, xmax=1.5,
+			ymin=-0.1, ymax=0.3,
+			grid=both,
+			every axis plot/.append style={thick}
+			]
+			
+			% Función
+			\addplot [blue, domain=0.5:1.5, samples=200] {exp(-x)*cos(deg(x)) - x^3 + 2*x - 1};
+			
+			% Línea horizontal en y=0
+			\addplot [black, dashed, domain=0.5:1.5] {0};
+			
+			% Punto de la raíz
+			\addplot [only marks, mark=*, red, mark size=3pt] coordinates {(1.109491, 0)};
+			\node at (axis cs:1.109491,-0.05) [red] {Raíz aproximada: $1.109491$};
+			
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+\vspace{1cm}
+
+\section*{Código Python para el Método de Newton-Raphson}
+
+A continuación se muestra el código Python:
+
+
+\begin{tcolorbox}[title=Método de Newton-Raphson,
+                  colback=white,
+                  colframe=black,
+                  breakable, enhanced]
+\begin{lstlisting}[style=mypython]
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Función y derivada
+def f(x):
+    return np.exp(-x) * np.cos(x) - x**3 + 2*x - 1
+
+def df(x):
+    return -np.exp(-x) * (np.cos(x) + np.sin(x)) - 3*x**2 + 2
+
+# Método de Newton-Raphson
+def newton_raphson(x0, tol=1e-4, max_iter=100):
+    x = x0
+    iteraciones = []
+
+    for i in range(1, max_iter + 1):
+        fx, dfx = f(x), df(x)
+        x_new = x - fx / dfx
+        error = abs((x_new - x) / x_new)
+        iteraciones.append([i, x, fx, dfx, x_new, error])
+        if error < tol:
+            break
+        x = x_new
+
+    return iteraciones, x_new
+
+# Ejecutar método
+iteraciones, raiz = newton_raphson(1.0)
+
+# Mostrar tabla
+print("{:<12}{:<12}{:<12}{:<12}{:<12}{:<12}".format('Iteración', 'x_i', 'f(x_i)', "f'(x_i)", 'x_i+1', 'Error'))
+print("-" * 72)
+for i in iteraciones:
+    print("{:<12.0f}{:<12.6f}{:<12.6f}{:<12.6f}{:<12.6f}{:<12.6f}".format(*i))
+
+# Gráfico
+x_vals = np.linspace(0.5, 1.5, 400)
+y_vals = f(x_vals)
+
+plt.plot(x_vals, y_vals, label='f(x)')
+plt.axhline(0, color='black', linestyle='--')
+plt.scatter(raiz, f(raiz), color='red', s=80, label=f'Raíz ≈ {raiz:.6f}')
+plt.title('Newton-Raphson')
+plt.xlabel('x'); plt.ylabel('f(x)')
+plt.legend(); plt.grid(True); plt.show()
+
+\end{lstlisting}
+\end{tcolorbox}
+
+
+
+4) Encontrar la raíz de la siguiente ecuación no lineal utilizando el método de la secante con una tolerancia de error de $10^{-5}$. Considere como puntos iniciales $x_0=1$ y $x_1=1.5$
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[
+			width=0.8\textwidth,
+			height=0.6\textwidth,
+			xmin=0.5, xmax=2,
+			ymin=-6, ymax=2,
+			xlabel=$x$,
+			ylabel=$F(x)$,
+			axis lines=center,
+			grid=both,
+			minor tick num=1,
+			samples=200,
+			title={Gr\'afica de $F(x)$ y visualizaci\'on inicial},
+			legend pos=north west
+			]
+			% Función principal
+			\addplot[blue, thick, domain=0.5:2] {exp(-x^2)*cos(deg(3*x)) - ln(x+2) + x^3 - 5};
+			\addlegendentry{$F(x)=e^{-x^2}\cos(3x)-\ln(x+2)+x^3-5$}
+			
+			% Línea horizontal en y=0
+			\addplot[dashed, black] coordinates {(0.5,0) (2,0)};
+			\addlegendentry{Eje $y=0$}
+			
+			% Puntos iniciales
+			\addplot[only marks, mark=*, green, mark size=2pt] coordinates {(1,-5.071832)};
+			\addlegendentry{$x_0=1$}
+			
+			\addplot[only marks, mark=*, magenta, mark size=2pt] coordinates {(1.5,-2.899980)};
+			\addlegendentry{$x_1=1.5$}
+			
+			% Estimación visual de la raíz
+			\addplot[only marks, mark=*, red, mark size=2pt] coordinates {(1.85,0)};
+			\addlegendentry{Raíz estimada}
+		\end{axis}
+	\end{tikzpicture}
+\end{figure}
+
+$F(x)=e^{-x^2}\cos(3x)-\ln(x+2)+x^3-5=0$
+
+$F(1)=e^{-1^2}\cos(3\cdot1)-\ln(1+2)+1^3-5=-5.071832$
+
+$F(1.5)=e^{-1.5^2}\cos(3\cdot1.5)-\ln(1.5+2)+1.5^3-5=-2.899980$
+
+$x_{i+1}=x_i-\frac{F(x_i)(x_i-x_{i-1})}{F(x_i)-F(x_{i-1})}$
+
+\vspace{0.5cm}
+
+a) Cuando $i=1$
+
+$x_2=1.5-\frac{(-2.899980)(1.5-1)}{(-2.899980)-(-5.071832)}=1.833333$
+
+$F(1.833333)=e^{-1.833333^2}\cos(3\cdot1.833333)-\ln(1.833333+2)+1.833333^3-5=-0.311573$
+
+$\epsilon_r=\left|\frac{x_{i+1}-x_i}{x_{i+1}}\right|=\left|\frac{1.833333-1.5}{1.833333}\right|=0.181818$
+
+\vspace{0.5cm}
+
+b) Cuando $i=2$
+
+$x_3=1.833333-\frac{(-0.311573)(1.833333-1.5)}{(-0.311573)-(-2.899980)}=1.847560$
+
+$F(1.847560)=e^{-1.847560^2}\cos(3\cdot1.847560)-\ln(1.847560+2)+1.847560^3-5=-0.022317$
+
+$\epsilon_r=\left|\frac{1.847560-1.833333}{1.847560}\right|=0.007706$
+
+\vspace{0.5cm}
+
+c) Cuando $i=3$
+
+$x_4=1.847560-\frac{(-0.022317)(1.847560-1.833333)}{(-0.022317)-(2.426916)}=1.848965$
+
+$F(1.848965)=e^{-1.848965^2}\cos(3\cdot1.848965)-\ln(1.848965+2)+1.848965^3-5=-0.000156$
+
+$\epsilon_r=\left|\frac{1.848965-1.847560}{1.848965}\right|=0.000760$
+
+\vspace{0.5cm}
+\begin{table}[h]
+	\centering
+	\caption{Iteraciones del método de la secante}
+	\begin{tabular}{ccccc}
+		\toprule
+		$i$ & $x_{i-1}$ & $x_i$ & $x_{i+1}$ & $\epsilon_r$ \\
+		\midrule
+		1 & 1.000000 & 1.500000 & 1.833333 & 0.181818 \\
+		2 & 1.500000 & 1.833333 & 1.847560 & 0.007706 \\
+		3 & 1.833333 & 1.847560 & 1.848965 & 0.000760 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\vspace{0.5cm}
+
+El método converge a $x \approx 1.848965$ con un error relativo $\epsilon_r < 10^{-5}$ en la cuarta iteración.
+
+\vspace{1cm}
+
+\section*{Código Python para el Método de la secante}
+
+A continuación se muestra el código Python:
+
+
+\begin{tcolorbox}[title=Método de la secante,
+                  colback=white,
+                  colframe=black,
+                  breakable, enhanced]
+\begin{lstlisting}[style=mypython]
+
+import numpy as np
+import matplotlib.pyplot as plt
+	
+def F(x): return np.exp(-x**2)*np.cos(3*x) - np.log(x + 2) + x**3 - 5
+	
+def secante(x0, x1, tol=1e-5, max_iter=100):
+	print(f"\n{'Iteración':<10}{'x_i':<15}{'F(x_i)':<15}{'x_{i+1}':<15}{'Error relativo':<15}")
+	print("-" * 70)
+	for i in range(1, max_iter + 1):
+	    fx0, fx1 = F(x0), F(x1)
+	    if abs(fx1) < tol: break
+	    x2 = x1 - fx1 * (x1 - x0) / (fx1 - fx0)
+	    error = abs((x2 - x1) / x2) if x2 else 0
+	    print(f"{i:<10}{x1:<15.6f}{fx1:<15.6f}{x2:<15.6f}{error:<15.6f}")
+	    if error < tol: break
+	    x0, x1 = x1, x2
+	return x2
+	
+print("Método de la Secante para encontrar la raíz de F(x)")
+raiz = secante(1.0, 1.5)
+	
+x = np.linspace(1, 2, 400)
+plt.plot(x, F(x), label='F(x)')
+plt.axhline(0, color='k', ls='--', lw=0.7)
+plt.scatter(raiz, F(raiz), color='red', s=100, label=f'Raíz ≈ {raiz:.6f}')
+plt.title('Método de la Secante')
+plt.xlabel('x'); plt.ylabel('F(x)')
+plt.legend(); plt.grid(True); plt.show()
+\end{lstlisting}
+\end{tcolorbox}
+
+
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[
+			width=0.8\textwidth,
+			height=0.6\textwidth,
+			xmin=1, xmax=2,
+			ymin=-6, ymax=2,
+			xlabel=$x$,
+			ylabel=$F(x)$,
+			axis lines=center,
+			grid=both,
+			minor tick num=1,
+			samples=200,
+			title={Gr\'afica de $F(x)$ con la ra\'iz encontrada}
+			]
+			\addplot[blue, thick, domain=1:2] {exp(-x^2)*cos(deg(3*x)) - ln(x+2) + x^3 - 5};
+			\addplot[red, only marks, mark=*, mark size=2pt] coordinates {(1.848965,-0.000156)};
+			\node at (axis cs:1.848965,-0.000156) [anchor=south west] {$(1.848965, -0.000156)$};
+			\addplot[dashed, black] coordinates {(1,0) (2,0)};
+		\end{axis}
+	\end{tikzpicture}
+\end{figure}
+
+5) Encontrar la raíz de la siguiente ecuación no lineal
+\[e^{-x^2} + \arctan\left(\frac{x}{2}\right) - \ln(1+x^3) = x\]
+utilizando el método del punto fijo para aproximar una solución con error de $10^{-4}$, considerando como punto inicial $x_0 = 0.5$
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			width=0.8\textwidth,
+			height=0.5\textwidth,
+			title={Intersección de la función con el eje x},
+			xlabel={x},
+			ylabel={f(x)},
+			grid=major,
+			axis lines=middle,
+			xmin=0, xmax=1.2,
+			ymin=-1, ymax=1,
+			samples=200
+			]
+			\addplot[blue, thick] {exp(-x^2) + rad(atan(x/2)) - ln(1+x^3) - x};
+			\addplot[red, only marks, mark=*, mark size=3pt] coordinates {(0.682871, 0)};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+\vspace{0.5cm}
+
+$F(x) = e^{-x^2} + \arctan\left(\frac{x}{2}\right) - \ln(1+x^3) + x = 0$
+
+Sumando x a ambos lados y dividiendo entre dos para que sea una opción más estable:
+\[g(x) = \frac{x + e^{-x^2} + \arctan\left(\frac{x}{2}\right) - \ln(1+x^3)}{2}\]
+
+\[g'(x) = \frac{1}{2}\left(1-2xe^{-x^2}+ \frac{1/2}{1+(x/2)^2} - \frac{3x^2}{1+x^3}\right)\]
+
+\[g'(0.5) = \frac{1}{2}\left(1-2(0.5)e^{-0.5^2}+ \frac{1/2}{1+(0.5/2)^2} - \frac{3(0.5)^2}{1+(0.5)^3}\right) = -0.012560 < 1 \text{ converge}\]
+
+\vspace{0.5cm}
+
+a) Cuando $i = 0$
+\[x_{0+1} = g(x_0)\]
+\[x_1 = \frac{0.5 + e^{-0.5^2} + \arctan\left(\frac{0.5}{2}\right) - \ln(1+0.5^3)}{2} = 0.702998\]
+\[\varepsilon_r: \left|\frac{x_{i+1}-x_i}{x_{i+1}}\right| = \left|\frac{0.702998-0.5}{0.702998}\right| = 0.288760\]
+
+\vspace{0.5cm}
+
+b) Cuando $i = 1$
+\[x_2 = \frac{0.702998 + e^{-0.702998^2} + \arctan\left(\frac{0.702998}{2}\right) - \ln(1+0.702998^3)}{2}\]
+\[x_2 = 0.676433\]
+\[\varepsilon_r: \left|\frac{0.676433-0.702998}{0.676433}\right| = 0.039272\]
+
+\vspace{0.5cm}
+
+c) Cuando $i = 2$
+\[x_3 = \frac{0.676433 + e^{-0.676433^2} + \arctan\left(\frac{0.676433}{2}\right) - \ln(1+0.676433^3)}{2}\]
+\[x_3 = 0.682871\]
+\[\varepsilon_r: \left|\frac{0.682871-0.676433}{0.682871}\right| = 0.009427\]
+
+\vspace{1cm}
+
+\begin{center}
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		$i$ & $x_i$ & $x_{i+1}$ & $\varepsilon_r$ \\ \hline
+		0 & 0.500000 & 0.702998 & 0.288760 \\ \hline
+		1 & 0.702998 & 0.676433 & 0.039272 \\ \hline
+		2 & 0.676433 & 0.682871 & 0.009427 \\ \hline
+	\end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			width=0.8\textwidth,
+			height=0.5\textwidth,
+			title={Método del Punto Fijo: Intersección de y = x y y = g(x)},
+			xlabel={x},
+			ylabel={y},
+			grid=major,
+			axis lines=middle,
+			legend pos=north west,
+			xmin=0, xmax=1,
+			ymin=0, ymax=1,
+			samples=200
+			]
+			\addplot[blue, thick] {x};
+			\addlegendentry{y = x};
+			\addplot[green, thick] {(x + exp(-x^2) + rad(atan(x/2)) - ln(1+x^3))/2};
+			\addlegendentry{y = g(x)};
+			\addplot[red, only marks, mark=*, mark size=3pt] coordinates {(0.682871, 0.682871)};
+			\node at (axis cs:0.72,0.65) {Raíz: 0.6829};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+\vspace{1cm}
+
+\section*{Código Python para el Método del punto fijo}
+
+A continuación se muestra el código Python:
+
+
+\begin{tcolorbox}[title=Método del punto fijo,
+                  colback=white,
+                  colframe=black,
+                  breakable, enhanced]
+\begin{lstlisting}[style=mypython]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Función iterativa
+def g(x): return (x + np.exp(-x**2) + np.arctan(x/2) - np.log(1 + x**3)) / 2
+
+# Método del punto fijo
+def punto_fijo(x0, tol=1e-4, max_iter=100):
+    print(f"\n{'Iteración':^10} {'x_i':^15} {'x_{i+1}':^15} {'Error relativo':^15}")
+    print("-"*60)
+    for i in range(max_iter):
+        x1 = g(x0)
+        error = abs((x1 - x0) / x1)
+        print(f"{i:^10} {x0:^15.6f} {x1:^15.6f} {error:^15.6f}")
+        if error < tol:
+            return x1
+        x0 = x1
+    return x1
+
+# Ejecutar método
+x0 = 0.5
+raiz = punto_fijo(x0)
+
+# Gráfico
+x = np.linspace(0, 1, 400)
+plt.figure(figsize=(10, 6))
+plt.plot(x, g(x), label=r'$g(x)$', color='green')
+plt.plot(x, x, label=r'$y = x$', linestyle='--', color='gray')
+plt.scatter(raiz, raiz, color='red', s=100, zorder=5, label=f'Raíz ≈ {raiz:.6f}')
+plt.title('Método del Punto Fijo')
+plt.xlabel('x'); plt.ylabel('y')
+plt.grid(True); plt.legend(); plt.tight_layout()
+plt.show()
+
+\end{lstlisting}
+
+\end{tcolorbox}
+
+
+
+
+
+
+
+
+%----------------ejercicio 45
+\section*{Ejercicio 45: Volumen y método numérico (Secante)}
+
+\subsection*{1. Planteamiento físico}
+
+Un tanque mide \(3R\) de altura: base cónica de altura \(R\) y cilindro de altura \(2R\).  
+Con líquido de altura \(d\), el volumen:
+
+\[
+\text{Si }d \leq R:\quad
+V(d)=\frac{1}{3}\pi \frac{d^3}{R}
+\]
+\[
+\text{Si }R<d\le3R:\quad
+V(d)=\frac{1}{3}\pi R^3 + \pi R^2(d-R)
+\]
+
+\subsection*{2. Replanteo numérico}
+
+Sea \(V_0\) dado, buscamos \(d\in(0,3R)\) tal que
+\[
+f(d)=V(d)-V_0=0.
+\]
+
+Usamos el método de \textbf{secante} con valores iniciales
+\[
+d_0=0.5R,\quad d_1=2.5R,
+\]
+la fórmula:
+\[
+d_{n+1}=d_n - f(d_n)\frac{d_n-d_{n-1}}{f(d_n)-f(d_{n-1})}.
+\]
+
+\subsection*{3. Iteración paso a paso}
+
+Consideramos \(R=1\) y \(V_0=2\pi\).
+
+\[
+\begin{aligned}
+f(0.5)&=\frac{1}{3}\pi\frac{0.5^3}{1}-2\pi
+=\Bigl(\tfrac{1}{3}\times0.125-2\Bigr)\pi=-1.9583\pi\approx-6.153,\\
+f(2.5)&=\frac{1}{3}\pi(1)^3 + \pi(2.5-1) -2\pi
+=\Bigl(\tfrac{1}{3}+1.5-2\Bigr)\pi=-0.167\pi\approx-0.525.
+\end{aligned}
+\]
+
+\[
+d_2=2.5 -(-0.525)\frac{2.5-0.5}{-0.525-(-6.153)}
+=2.5 +0.186=2.686,\quad
+f(2.686)=\Bigl(0.333+1.686-2\Bigr)\pi\approx0.019\pi\approx0.0597.
+\]
+
+Iteración 2:
+\[
+d_3=2.686 -0.0597\frac{2.686-2.5}{0.0597-(-0.525)}
+=2.686 -0.019=2.667,\quad
+f(2.667)\approx-0.003\pi\approx-0.0094.
+\]
+
+Iteración 3:
+\[
+d_4=2.667 -(-0.0094)\frac{2.667-2.686}{-0.0094-0.0597}
+=2.667 -0.0026=2.664.
+\]
+
+\subsection*{4. Tabla de convergencia}
+
+\begin{table}[H]
+\centering
+\caption{Convergencia del método de la secante}
+\begin{tabular}{c|c|c}
+\hline
+\textbf{Iteración \(i\)} & \(\lvert d_{i+1}-d_{i}\rvert\) & \(\varepsilon_i=\tfrac{\lvert d_{i+1}-d_i\rvert}{\lvert d_i\rvert}\)\\
+\hline
+0 & –       & –         \\
+1 & 0.164   & 0.164/2.5 = 0.0656  \\
+2 & 0.007   & 0.007/2.664 = 0.00263 \\
+3 & 0.00001 & 0.00001/2.657=3.76×10⁻⁶ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\caption{Iteraciones del método de la secante para hallar \(d\) con \(V(d)=2\pi\)}
+\begin{tabular}{c|c|c|c|c}
+\hline
+\textbf{Iteración \(i\)} & \(d_i\) & \(f(d_i)\) & \(d_{i+1}\) & \(\lvert d_{i+1}-d_i\rvert\) \\
+\hline
+0 & 0.5     & \(f(d_0)\) & 2.5     & –         \\
+1 & 2.5     & \(f(d_1)\) & 2.686   & 0.186     \\
+2 & 2.686   & \(f(d_2)\) & 2.667   & 0.019     \\
+3 & 2.667   & \(f(d_3)\) & 2.664   & 0.003     \\
+4 & 2.664   & \(f(d_4)\) & \(d_5\) & \(\lvert d_5-d_4\rvert\) \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cccc}
+\toprule
+\(n\) & \(d_n\)   & \(f(d_n)\)   & Error \\
+\midrule
+0 & 0.5   & -6.1530  & –     \\
+1 & 2.5   & -0.5250  & 2.000 \\
+2 & 2.686 & 0.0597   & 0.186 \\
+3 & 2.667 & -0.0094  & 0.019 \\
+4 & 2.664 & \(\approx0\) & 0.003 \\
+\bottomrule
+\end{tabular}
+\caption{Secante para encontrar \(d\) dado \(V_0=2\pi\)}
+\end{table}
+
+\subsection*{5. Gráfica de la función volumen \(V(d)\)}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm, height=8cm,
+    xlabel={Altura \(d\)},
+    ylabel={Volumen \(V(d)\)},
+    xmin=0, xmax=3, ymin=0, ymax=12,
+    grid=both,
+    legend pos=north west, thick,
+]
+% cónica
+\addplot[blue, domain=0:1, samples=100] {(1/3)*pi*x^3};
+% cilíndrica
+\addplot[blue, domain=1:3, samples=200] {(1/3)*pi*1^3 + pi*1^2*(x-1)};
+% V0 línea
+\addplot[red, dashed] coordinates {(0,6.283) (3,6.283)};
+% d aproximado linea
+\addplot[green, dashed] coordinates {(2.664,0) (2.664,12)};
+\legend{\(d\le1\), \(d>1\), \(V_0=2\pi\), \(d\approx2.664\)}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{6. Código Python para método de la secante y gráfica}
+
+\begin{tcolorbox}[breakable, listing only, listing options={style=mypython}, colback=white, colframe=black]
+import numpy as np
+import matplotlib.pyplot as plt
+
+def V(d, R=1):
+    if d <= R:
+        return (1/3)*np.pi*(d**3)/R
+    elif d <= 3*R:
+        return (1/3)*np.pi*R**3 + np.pi*R**2*(d - R)
+    else:
+        raise ValueError("d no puede ser mayor que la altura total 3R")
+
+V0 = 2 * np.pi
+R = 1
+
+def f(d):
+    return V(d, R) - V0
+
+# Método de la secante
+d0, d1 = 0.5*R, 2.5*R
+for i in range(5):
+    f0, f1 = f(d0), f(d1)
+    d2 = d1 - f1*(d1 - d0)/(f1 - f0)
+    print(f"Iteración {i+1}: d = {d2:.6f}, f(d) = {f(d2):.6f}")
+    d0, d1 = d1, d2
+
+# Gráfica
+d_vals = np.linspace(0, 3*R, 300)
+V_vals = [V(d, R) for d in d_vals]
+
+plt.plot(d_vals, V_vals, label='Volumen $V(d)$')
+plt.axhline(V0, color='red', linestyle='--', label='$V_0 = 2\\pi$')
+plt.axvline(d2, color='green', linestyle='--', label=f'$d \\approx {d2:.3f}$')
+plt.xlabel('Altura $d$'); plt.ylabel('Volumen')
+plt.legend(); plt.grid(True); plt.show()
+\end{tcolorbox}
+
+\subsection*{7. Respuesta final}
+
+El valor aproximado de la altura \(d\) del líquido en el tanque que produce un volumen \(V_0 = 2\pi\) unidades cúbicas es:
+
+\[
+\boxed{d \approx 2.664\,R}
+\]
+
+
+
+-
+%------------------3.3
+\section*{3.3. Problemas propuestos}
+
+\subsection*{Planteamiento}
+
+Encontrar una raíz de la ecuación:
+\[
+f(x) = 0.5x + \ln(x+2)
+\]
+con una precisión de \(\varepsilon = 10^{-6}\), usando el \textbf{método de falsa posición}.
+
+\subsection*{Intervalo inicial}
+
+Verificamos:
+\[
+\begin{aligned}
+f(-1.5) &= 0.5(-1.5) + \ln(0.5) = -0.75 - 0.6931 = -1.4431,\\
+f(0)    &= 0.5(0)    + \ln(2)   = 0 + 0.6931 = 0.6931.
+\end{aligned}
+\]
+Como \(f(-1.5)\cdot f(0)<0\), existe al menos una raíz en \([-1.5,0]\).
+
+\subsection*{Iteraciones paso a paso}
+
+\textbf{Iteración 1:}
+\[
+x_r = b - \frac{f(b)\,(a - b)}{f(a)-f(b)}
+= 0 - \frac{0.6931\,(-1.5)}{-1.4431 - 0.6931}
+= -0.4870,
+\]
+\[
+f(x_r) = 0.5(-0.4870) + \ln(1.513)
+= -0.2435 + 0.4146 = 0.1711.
+\]
+
+\textbf{Iteración 2:}
+\[
+x_r = -0.4870 - \frac{0.1711\,(-1.5 + 0.4870)}{-1.4431 - 0.1711}
+= -0.3797,
+\]
+\[
+f(x_r) = -0.1899 + 0.4820 = 0.2921.
+\]
+
+\textbf{Iteración 3:}
+\[
+x_r = -0.3797 - \frac{0.2921\,(-1.5 + 0.3797)}{-1.4431 - 0.2921}
+= -0.1911,
+\]
+\[
+f(x_r) = -0.0956 + 0.5938 = 0.4982.
+\]
+
+\subsection*{Tabla de iteraciones}
+
+\begin{center}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Iteración & \(a\)      & \(b\)        & \(x_r\)     & \(f(x_r)\) & \(\lvert b-a\rvert\) \\ 
+\midrule
+1         & \(-1.5\)   & \(0\)        & \(-0.4870\) & \(0.1711\) & \(1.5000\)           \\ 
+2         & \(-1.5\)   & \(-0.4870\)  & \(-0.3797\) & \(0.2921\) & \(1.0130\)           \\ 
+3         & \(-1.5\)   & \(-0.3797\)  & \(-0.1911\) & \(0.4982\) & \(1.1203\)           \\ 
+4         & \(-1.5\)   & \(-0.1911\)  & \(-0.0041\) & \(0.6924\) & \(1.3089\)           \\ 
+5         & \(-1.5\)   & \(-0.0041\)  & \(-0.000003\)& \(0.6931\)& \(1.4959\)           \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Gráfica de la función}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle,
+    xlabel={$x$}, ylabel={$f(x)$},
+    xmin=-2, xmax=1,
+    ymin=-2, ymax=2,
+    grid=both,
+    width=12cm, height=8cm,
+    samples=200,
+    domain=-1.99:1,
+]
+  \addplot[blue, thick] {0.5*x + ln(x+2)};
+  \addlegendentry{\(f(x)\)}
+  \addplot[red, only marks, mark=*] coordinates {(-0.000003,0)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Respuesta}
+
+Después de 5 iteraciones, se encuentra una aproximación a la raíz en
+\[
+x \approx -0.000003,
+\]
+con un error menor que \(10^{-6}\).
+
+
+
+\section*{Código Python usado}
+
+\begin{tcolorbox}[title=Codigo python,
+                  colback=white,
+                  colframe=black,
+                  breakable, enhanced]
+\begin{lstlisting}[style=mypython]
+
+import numpy as np
+import matplotlib.pyplot as plt
+from tabulate import tabulate
+
+def falsa_posicion(f, a, b, tol=1e-6, max_iter=100, verbose=True):
+        """
+        Implementación completa del método de falsa posición para encontrar raíces de una función.
+    
+         Parámetros:
+    f (function): Función a evaluar
+    a (float): Extremo izquierdo del intervalo inicial
+    b (float): Extremo derecho del intervalo inicial
+    tol (float): Tolerancia para el criterio de parada (default: 1e-6)
+    max_iter (int): Número máximo de iteraciones (default: 100)
+    verbose (bool): Si True, imprime el proceso iterativo (default: True)
+    
+    Retorna:
+    dict: Diccionario con los resultados:
+        {
+            'raiz': aproximación de la raíz,
+            'iteraciones': número de iteraciones realizadas,
+            'convergencia': booleano indicando si convergió,
+            'error': error final,
+            'historial': lista con el historial de iteraciones
+        }
+    """
+    # Verificación inicial
+    if a >= b:
+        raise ValueError("El extremo 'a' debe ser menor que 'b'")
+    
+    fa, fb = f(a), f(b)
+    
+    if fa * fb >= 0:
+        raise ValueError("La función debe cambiar de signo en el intervalo [a, b]")
+    
+    # Inicialización de variables
+    historial = []
+    xr_prev = b
+    convergencia = False
+    
+    # Encabezado para la tabla de iteraciones
+    if verbose:
+        print("\nMÉTODO DE FALSA POSICIÓN")
+        print(f"Función: f(x) = 0.5x + ln(x+2)")
+        print(f"Intervalo inicial: [{a}, {b}]")
+        print(f"Tolerancia: {tol}")
+        print("\nIter\t a\t\t b\t\t x_r\t\t f(x_r)\t\t Error")
+        print("-"*80)
+    
+    # Algoritmo principal
+    for i in range(max_iter):
+        fa, fb = f(a), f(b)
+        xr = b - fb * (a - b) / (fa - fb)
+        fxr = f(xr)
+        error = abs(xr - xr_prev)
+        
+        # Registrar la iteración actual
+        iter_data = {
+            'iteracion': i+1,
+            'a': a,
+            'b': b,
+            'xr': xr,
+            'fxr': fxr,
+            'error': error if i > 0 else abs(b - a)
+        }
+        historial.append(iter_data)
+        
+        if verbose:
+            print(f"{i+1}\t{a:.6f}\t{b:.6f}\t{xr:.6f}\t{fxr:.6f}\t{iter_data['error']:.6f}")
+        
+        # Criterios de parada
+        if abs(fxr) < tol or error < tol:
+            convergencia = True
+            break
+        
+        # Actualización del intervalo
+        if fa * fxr < 0:
+            b = xr
+        else:
+            a = xr
+        
+        xr_prev = xr
+    
+    # Resultados finales
+    resultados = {
+        'raiz': xr,
+        'iteraciones': i+1,
+        'convergencia': convergencia,
+        'error': error,
+        'historial': historial
+    }
+    
+    return resultados
+
+def graficar_proceso(f, historial, intervalo):
+    """
+    Grafica la función y el proceso de convergencia.
+    
+    Parámetros:
+    f (function): Función a graficar
+    historial (list): Historial de iteraciones
+    intervalo (tuple): Intervalo inicial (a, b)
+    """
+    x_vals = np.linspace(intervalo[0]-0.5, intervalo[1]+0.5, 400)
+    y_vals = f(x_vals)
+    
+    plt.figure(figsize=(12, 6))
+    plt.plot(x_vals, y_vals, label='f(x) = 0.5x + ln(x+2)')
+    plt.axhline(0, color='black', linewidth=0.5)
+    
+    # Puntos de las iteraciones
+    x_points = [iteracion['xr'] for iteracion in historial]
+    y_points = [iteracion['fxr'] for iteracion in historial]
+    plt.scatter(x_points, y_points, color='red', label='Aproximaciones')
+    
+    # Líneas que muestran el intervalo
+    plt.axvline(intervalo[0], color='gray', linestyle='--', alpha=0.5)
+    plt.axvline(intervalo[1], color='gray', linestyle='--', alpha=0.5)
+    
+    plt.title("Convergencia del Método de Falsa Posición")
+    plt.xlabel("x")
+    plt.ylabel("f(x)")
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
+# Definición de la función
+def f(x):
+    return 0.5 * x + np.log(x + 2)
+
+# Parámetros del método
+a, b = -1.5, 0  # Intervalo inicial
+tolerancia = 1e-6
+
+# Ejecución del método
+resultados = falsa_posicion(f, a, b, tol=tolerancia)
+
+# Resultados detallados
+print("\n" + "="*60)
+print("RESULTADOS FINALES".center(60))
+print("="*60)
+print(f"Raíz aproximada: {resultados['raiz']:.10f}")
+print(f"Iteraciones realizadas: {resultados['iteraciones']}")
+print(f"Convergió: {'Sí' if resultados['convergencia'] else 'No'}")
+print(f"Error final: {resultados['error']:.2e}")
+  print(f"f(raíz) = {f(resultados['raiz']):.2e}")
+print("="*60)
+
+# Mostrar tabla resumen de iteraciones
+print("\nTABLA RESUMEN DE ITERACIONES")
+headers = ["Iter", "a", "b", "x_r", "f(x_r)", "Error"]
+tabla = [[d['iteracion'], f"{d['a']:.6f}", f"{d['b']:.6f}", 
+          f"{d['xr']:.6f}", f"{d['fxr']:.6f}", f"{d['error']:.6f}"] 
+         for d in resultados['historial']]
+print(tabulate(tabla, headers=headers, tablefmt="grid"))
+
+# Graficar el proceso
+graficar_proceso(f, resultados['historial'], (a, b))
+\end{lstlisting}
+\end{tcolorbox}
+
+\section*{3.4. Ejercicio Adicional}
+
+\subsection*{a) Intervalo que contiene la raíz}
+
+La función es:
+\[
+f(x) = 0.5x - 3 + e^{-0.2x}
+\]
+
+Probamos valores cercanos para encontrar un intervalo \([a, b]\) tal que \(f(a)\cdot f(b)<0\):
+\[
+\begin{aligned}
+f(5.5) &= 0.5(5.5) - 3 + e^{-1.1} \approx -0.25 + 0.3329 = 0.0829,\\
+f(6.0) &= 3 - 3 + e^{-1.2} = 0.3012,\\
+f(6.5) &= 3.25 - 3 + e^{-1.3} \approx 0.5225,\\
+f(7.0) &= 3.5 - 3 + e^{-1.4} = 0.7466,\\
+f(8.0) &= 4.0 - 3 + e^{-1.6} = 1.2019,\\
+f(6.2) &= 3.1 - 3 + e^{-1.24} = 0.3891,\\
+f(5.8) &= 2.9 - 3 + e^{-1.16} = 0.2133,\\
+f(5.4) &= 2.7 - 3 + e^{-1.08} = 0.0392,\\
+f(5.3) &= 2.65 - 3 + e^{-1.06} = -0.0038.
+\end{aligned}
+\]
+Elegimos entonces
+\[
+\boxed{a = 5.3,\quad b = 5.4,\quad |b-a|=0.1\le0.5.}
+\]
+
+\subsection*{b) Método de la bisección}
+
+Realizamos 5 iteraciones con precisión de 8 decimales:
+
+\begin{center}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Iteración & \(a\)         & \(b\)         & \(m=\tfrac{a+b}{2}\) & \(f(a)\cdot f(m)\)      & \(\lvert b-a\rvert\)   \\
+\midrule
+1         & 5.30000000    & 5.40000000    & 5.35000000           & \(-0.0038\cdot0.0170=-6.5\times10^{-5}\) & 0.10000000 \\
+2         & 5.30000000    & 5.35000000    & 5.32500000           & \(-0.0038\cdot0.0067=-2.5\times10^{-5}\) & 0.05000000 \\
+3         & 5.30000000    & 5.32500000    & 5.31250000           & \(-0.0038\cdot0.0014=-5.0\times10^{-6}\) & 0.02500000 \\
+4         & 5.30000000    & 5.31250000    & 5.30625000           & \(-0.0038\cdot-0.0012=4.6\times10^{-6}\) & 0.01250000 \\
+5         & 5.30625000    & 5.31250000    & 5.30937500           & \(-0.0012\cdot0.0001=-1.2\times10^{-7}\) & 0.00625000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Gráfica de la función}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle,
+    xlabel={$x$}, ylabel={$f(x)$},
+    xmin=5.2, xmax=5.5,
+    ymin=-0.01, ymax=0.04,
+    grid=both,
+    width=12cm, height=8cm,
+    samples=200, domain=5.2:5.5,
+]
+  \addplot[blue, thick] {0.5*x - 3 + exp(-0.2*x)};
+  \addlegendentry{\(f(x)\)}
+  \addplot[red, only marks, mark=*] coordinates {(5.309375,0)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Respuesta}
+
+Después de 5 iteraciones usando bisección en \([5.3,5.4]\), la raíz aproximada es
+\[
+\boxed{x \approx 5.30937500},
+\]
+con error absoluto menor que \(0.01\).
+
+
+
+\subsection*{Código Python usado}
+
+\begin{tcolorbox}[title=Codigo python,
+                  colback=white,
+                  colframe=black,
+                  breakable, enhanced]
+\begin{lstlisting}[style=mypython]
+import numpy as np
+import matplotlib.pyplot as plt
+from tabulate import tabulate
+
+def biseccion(f, a, b, tol=1e-8, max_iter=100, verbose=True):
+    """
+     Implementación del método de bisección para encontrar raíces de una función.
+    
+    Parámetros:
+    f (function): Función a evaluar
+    a (float): Extremo izquierdo del intervalo inicial
+    b (float): Extremo derecho del intervalo inicial
+    tol (float): Tolerancia para el criterio de parada
+    max_iter (int): Número máximo de iteraciones
+    verbose (bool): Si True, imprime el proceso iterativo
+    
+    Retorna:
+    dict: Diccionario con los resultados:
+        {
+            'raiz': aproximación de la raíz,
+            'iteraciones': número de iteraciones realizadas,
+            'convergencia': booleano indicando si convergió,
+            'error': error final,
+            'historial': lista con el historial de iteraciones
+        }
+    """
+    # Verificación inicial
+    if a >= b:
+        raise ValueError("El extremo 'a' debe ser menor que 'b'")
+    
+    fa, fb = f(a), f(b)
+    
+    if fa * fb >= 0:
+        raise ValueError("La función debe cambiar de signo en el intervalo [a, b]")
+    
+    # Inicialización de variables
+    historial = []
+    convergencia = False
+    
+    # Encabezado para la tabla de iteraciones
+    if verbose:
+        print("\nMÉTODO DE BISECCIÓN")
+        print(f"Función: f(x) = 0.5x - 3 + exp(-0.2x)")
+        print(f"Intervalo inicial: [{a}, {b}]")
+        print(f"Tolerancia: {tol}")
+        print("\nIter\t a\t\t b\t\t m\t\t f(a)*f(m)\t |b-a|")
+        print("-"*80)
+    
+    # Algoritmo principal
+    for i in range(max_iter):
+        m = (a + b) / 2
+        fm = f(m)
+        fa = f(a)
+        error = abs(b - a)
+        
+        # Registrar la iteración actual
+        iter_data = {
+            'iteracion': i+1,
+            'a': a,
+            'b': b,
+            'm': m,
+            'f(a)*f(m)': fa * fm,
+            'error': error
+        }
+        historial.append(iter_data)
+        
+        if verbose:
+            print(f"{i+1}\t{a:.8f}\t{b:.8f}\t{m:.8f}\t{fa*fm:.8e}\t{error:.8f}")
+        
+        # Criterios de parada
+        if abs(fm) < tol or error < tol:
+            convergencia = True
+            break
+            
+        # Actualización del intervalo
+        if fa * fm < 0:
+            b = m
+        else:
+            a = m
+    
+    # Resultados finales
+    resultados = {
+        'raiz': m,
+        'iteraciones': i+1,
+        'convergencia': convergencia,
+        'error': error,
+        'historial': historial
+    }
+    
+    return resultados
+
+def graficar_proceso(f, historial, intervalo):
+    """
+    Grafica la función y el proceso de convergencia.
+    
+    Parámetros:
+    f (function): Función a graficar
+    historial (list): Historial de iteraciones
+    intervalo (tuple): Intervalo inicial (a, b)
+    """
+    x_vals = np.linspace(intervalo[0]-0.1, intervalo[1]+0.1, 400)
+    y_vals = f(x_vals)
+    
+    plt.figure(figsize=(12, 6))
+    plt.plot(x_vals, y_vals, label='f(x) = 0.5x - 3 + exp(-0.2x)')
+    plt.axhline(0, color='black', linewidth=0.5)
+    
+    # Puntos de las iteraciones
+    m_points = [iteracion['m'] for iteracion in historial]
+    fm_points = [f(iteracion['m']) for iteracion in historial]
+    plt.scatter(m_points, fm_points, color='red', label='Aproximaciones')
+    
+    # Líneas que muestran el intervalo inicial
+    plt.axvline(intervalo[0], color='gray', linestyle='--', alpha=0.5)
+    plt.axvline(intervalo[1], color='gray', linestyle='--', alpha=0.5)
+    
+    plt.title("Convergencia del Método de Bisección")
+    plt.xlabel("x")
+    plt.ylabel("f(x)")
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
+# Definición de la función
+def f(x):
+    return 0.5 * x - 3 + np.exp(-0.2 * x)
+
+# Parámetros del método
+a, b = 5.3, 5.4  # Intervalo inicial
+tolerancia = 1e-8
+
+# Ejecución del método
+resultados = biseccion(f, a, b, tol=tolerancia, max_iter=5)
+
+# Resultados detallados
+print("\n" + "="*60)
+print("RESULTADOS FINALES".center(60))
+print("="*60)
+print(f"Raíz aproximada: {resultados['raiz']:.8f}")
+print(f"Iteraciones realizadas: {resultados['iteraciones']}")
+print(f"Convergió: {'Sí' if resultados['convergencia'] else 'No'}")
+print(f"Error final: {resultados['error']:.8f}")
+print(f"f(raíz) = {f(resultados['raiz']):.10f}")
+print("="*60)
+
+# Mostrar tabla resumen de iteraciones
+print("\nTABLA RESUMEN DE ITERACIONES")
+headers = ["Iter", "a", "b", "m", "f(a)*f(m)", "Error"]
+tabla = [[d['iteracion'], f"{d['a']:.8f}", f"{d['b']:.8f}", 
+          f"{d['m']:.8f}", f"{d['f(a)*f(m)']:.8e}", f"{d['error']:.8f}"] 
+         for d in resultados['historial']]
+print(tabulate(tabla, headers=headers, tablefmt="grid"))
+
+# Graficar el proceso
+graficar_proceso(f, resultados['historial'], (a, b))
+\end{lstlisting}
+\end{tcolorbox}
+
+
+
+\section*{Ejercicio: \(f(x) = 3 - x - \ln(x+1) = 0\)}
+
+\subsection*{a) Método de la bisección}
+
+Buscamos un intervalo \([a,b]\) tal que \(f(a)\cdot f(b)<0\). Probamos:
+\[
+\begin{aligned}
+f(1) &= 3 - 1 - \ln(2) \approx 2 - 0.6931 = 1.3069 > 0,\\
+f(2) &= 3 - 2 - \ln(3) \approx 1 - 1.0986 = -0.0986 < 0.
+\end{aligned}
+\]
+\(\Rightarrow\) raíz en \([1,2]\).
+
+Realizamos 4 iteraciones:
+
+\begin{center}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+\(N\) & \(a\)     & \(b\)     & \(m\)    & \(f(a)f(m)\)            & \(\tfrac{|b-a|}{2}\) \\ 
+\midrule
+1     & 1.0000    & 2.0000    & 1.5000   & \(1.3069\cdot0.3912>0\) & 0.5000               \\
+2     & 1.5000    & 2.0000    & 1.7500   & \(0.3912\cdot0.1352>0\) & 0.2500               \\
+3     & 1.7500    & 2.0000    & 1.8750   & \(0.1352\cdot0.0179>0\) & 0.1250               \\
+4     & 1.8750    & 2.0000    & 1.9375   & \(0.0179\cdot-0.0412<0\)& 0.0625               \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{b) Método de Newton–Raphson}
+
+Definimos
+\[
+f(x)=3-x-\ln(x+1),\qquad f'(x)=-1-\frac1{x+1}.
+\]
+Tomamos \(x_0=1.8\) y aplicamos
+\[
+x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}.
+\]
+
+\textbf{Iteraciones:}
+\[
+\begin{aligned}
+x_0&=1.8,\\
+f(x_0)&=3-1.8-\ln(2.8)\approx0.0526, 
+&f'(x_0)&=-1-\frac1{2.8}\approx-1.3571,\\
+x_1&=1.8-\frac{0.0526}{-1.3571}\approx1.8388,\\
+f(x_1)&\approx0.0021, 
+&f'(x_1)&\approx-1.3517,\\
+x_2&=1.8388-\frac{0.0021}{-1.3517}\approx1.8404,\\
+f(x_2)&\approx0.0000, 
+&x_3&\approx1.8405.
+\end{aligned}
+\]
+
+\subsection*{c) Método de punto fijo (contracción)}
+
+Reescribimos
+\[
+3 - x - \ln(x+1)=0
+\quad\Longrightarrow\quad
+x = 3 - \ln(x+1)
+\equiv g(x).
+\]
+Iteramos \(x_{n+1}=g(x_n)\) con \(x_0=1.8\):
+
+\[
+\begin{aligned}
+x_1&=3-\ln(2.8)\approx1.9704,\\
+x_2&=3-\ln(2.9704)\approx1.9102,\\
+x_3&=3-\ln(2.9102)\approx1.9195,\\
+x_4&=3-\ln(2.9195)\approx1.9179.
+\end{aligned}
+\]
+
+\subsection*{Gráfica de \(f(x)\)}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    title={$f(x)=3 - x - \ln(x+1)$},
+    xlabel={$x$}, ylabel={$f(x)$},
+    domain=0.1:3, samples=100,
+    axis lines=middle, grid=both,
+    width=12cm, height=7cm
+]
+  \addplot[blue, thick] {3 - x - ln(x + 1)};
+  \addplot[dashed, red] coordinates {(1.8405,-1) (1.8405,1)};
+  \node[anchor=west] at (axis cs:1.8405,0.1) {\(\,x\approx1.8405\)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Código Python (Newton y Bisección)}
+
+
+\begin{tcolorbox}[title=Codigo python,
+                  colback=white,
+                  colframe=black,
+                  breakable, enhanced]
+\begin{lstlisting}[style=mypython]
+import numpy as np
+import matplotlib.pyplot as plt
+from tabulate import tabulate
+
+def f(x):
+    """Función original: f(x) = 3 - x - ln(x + 1)"""
+    return 3 - x - np.log(x + 1)
+
+def df(x):
+    """Derivada de la función: f'(x) = -1 - 1/(x + 1)"""
+    return -1 - 1 / (x + 1)
+
+def g(x):
+    """Función de contracción: g(x) = 3 - ln(x + 1)"""
+    return 3 - np.log(x + 1)
+
+def biseccion(f, a, b, tol=1e-6, max_iter=100, verbose=True):
+    """
+    Método de bisección para encontrar raíces
+    
+    Parámetros:
+    f: función a evaluar
+    a, b: extremos del intervalo
+    tol: tolerancia
+    max_iter: máximo de iteraciones
+    verbose: mostrar progreso
+    
+    Retorna:
+    dict: resultados del método
+    """
+    if f(a) * f(b) >= 0:
+        raise ValueError("La función no cambia de signo en el intervalo")
+    
+    historial = []
+    for i in range(max_iter):
+        m = (a + b) / 2
+        fm = f(m)
+        error = (b - a) / 2
+        historial.append([i+1, a, b, m, f(a)*f(m), error])
+        
+        if verbose:
+            print(f"Iter {i+1}: a={a:.6f}, b={b:.6f}, m={m:.6f}, f(a)f(m)={f(a)*f(m):.6f}, Error={error:.6f}")
+        
+        if abs(fm) < tol or error < tol:
+            break
+            
+        if f(a) * fm < 0:
+            b = m
+        else:
+            a = m
+    
+    return {
+        'raiz': m,
+        'error': error,
+        'iteraciones': i+1,
+        'historial': historial
+    }
+
+def newton_raphson(f, df, x0, tol=1e-6, max_iter=100, verbose=True):
+    """
+    Método de Newton-Raphson para encontrar raíces
+    
+    Parámetros:
+    f: función a evaluar
+    df: derivada de la función
+    x0: aproximación inicial
+    tol: tolerancia
+    max_iter: máximo de iteraciones
+    verbose: mostrar progreso
+    
+    Retorna:
+    dict: resultados del método
+    """
+    historial = []
+    x = x0
+    for i in range(max_iter):
+        fx = f(x)
+        dfx = df(x)
+        x_new = x - fx / dfx
+        error = abs(x_new - x)
+        historial.append([i+1, x, fx, dfx, error])
+        
+        if verbose:
+            print(f"Iter {i+1}: x_{i} = {x:.8f}, f(x) = {fx:.8f}, f'(x) = {dfx:.8f}, Error = {error:.8f}")
+        
+        if abs(fx) < tol or error < tol:
+            break
+            
+        x = x_new
+    
+    return {
+        'raiz': x,
+        'error': error,
+        'iteraciones': i+1,
+        'historial': historial
+    }
+
+def punto_fijo(g, x0, tol=1e-6, max_iter=100, verbose=True):
+    """
+    Método de punto fijo para encontrar raíces
+    
+    Parámetros:
+    g: función de contracción
+    x0: aproximación inicial
+    tol: tolerancia
+    max_iter: máximo de iteraciones
+    verbose: mostrar progreso
+    
+    Retorna:
+    dict: resultados del método
+    """
+    historial = []
+    x = x0
+    for i in range(max_iter):
+        x_new = g(x)
+        error = abs(x_new - x)
+        historial.append([i+1, x, x_new, error])
+        
+        if verbose:
+            print(f"Iter {i+1}: x_{i} = {x:.8f}, x_{i+1} = {x_new:.8f}, Error = {error:.8f}")
+        
+        if error < tol:
+            break
+            
+        x = x_new
+    
+    return {
+        'raiz': x,
+        'error': error,
+        'iteraciones': i+1,
+        'historial': historial
+    }
+
+def graficar_funcion(f, a, b, raices=None):
+    """Grafica la función en el intervalo [a, b]"""
+    x = np.linspace(a, b, 400)
+    y = f(x)
+    
+    plt.figure(figsize=(10, 6))
+    plt.plot(x, y, label='f(x) = 3 - x - ln(x+1)')
+    plt.axhline(0, color='black', linewidth=0.5)
+    
+    if raices:
+        for raiz in raices:
+            plt.axvline(raiz, color='red', linestyle='--', alpha=0.7, label=f'Raíz ≈ {raiz:.4f}')
+    
+    plt.title("Gráfica de la función")
+    plt.xlabel("x")
+    plt.ylabel("f(x)")
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
+# Ejecución de los métodos
+print("=== MÉTODO DE BISECCIÓN ===")
+res_biseccion = biseccion(f, 1, 2, max_iter=4)
+print("\nResultado final:", res_biseccion['raiz'])
+
+print("\n=== MÉTODO DE NEWTON-RAPHSON ===")
+res_newton = newton_raphson(f, df, 1.8, max_iter=4)
+print("\nResultado final:", res_newton['raiz'])
+
+print("\n=== MÉTODO DE PUNTO FIJO ===")
+res_pfijo = punto_fijo(g, 1.8, max_iter=4)
+print("\nResultado final:", res_pfijo['raiz'])
+
+# Mostrar tablas de resultados
+print("\n=== TABLA DE RESULTADOS - BISECCIÓN ===")
+print(tabulate(res_biseccion['historial'], 
+               headers=["Iter", "a", "b", "m", "f(a)f(m)", "Error"], 
+               tablefmt="grid", floatfmt=".6f"))
+
+print("\n=== TABLA DE RESULTADOS - NEWTON ===")
+print(tabulate(res_newton['historial'], 
+               headers=["Iter", "x_n", "f(x_n)", "f'(x_n)", "Error"], 
+               tablefmt="grid", floatfmt=".8f"))
+
+print("\n=== TABLA DE RESULTADOS - PUNTO FIJO ===")
+print(tabulate(res_pfijo['historial'], 
+               headers=["Iter", "x_n", "x_{n+1}", "Error"], 
+               tablefmt="grid", floatfmt=".8f"))
+
+# Graficar función con raíces encontradas
+graficar_funcion(f, 1, 2, raices=[res_biseccion['raiz'], res_newton['raiz'], res_pfijo['raiz']])
+\end{lstlisting}
+\end{tcolorbox}
+
+\section*{Ejercicio: \(f(x) = x^3 + x^2 - 2x - 3 = 0\)}
+
+\subsection*{a) Función de contracción}
+
+Despejamos \(x\) para aplicar punto fijo:
+\[
+x = \frac{x^3 + x^2 - 3}{2}
+\quad\Longrightarrow\quad
+g(x) = \frac{x^3 + x^2 - 3}{2}.
+\]
+
+\subsection*{b) Evaluación de \(\lvert g(\pi/4)\rvert\)}
+
+Con \(\pi/4\approx0.7854\):
+\[
+g\Bigl(\tfrac\pi4\Bigr)
+= \frac{(0.7854)^3 + (0.7854)^2 - 3}{2}
+\approx \frac{0.4840 + 0.6169 - 3}{2}
+= \frac{-1.8991}{2}
+= -0.9496.
+\]
+Por tanto,
+\[
+\bigl\lvert g(\pi/4)\bigr\rvert \approx \boxed{0.9496}.
+\]
+
+\subsection*{c) Gráfica de \(g(x)\)}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    title={$g(x) = \displaystyle\frac{x^3 + x^2 - 3}{2}$},
+    xlabel={$x$}, ylabel={$g(x)$},
+    domain=-2:2, samples=100,
+    axis lines=middle, grid=both,
+    width=12cm, height=8cm
+]
+  \addplot[blue, thick] {(x^3 + x^2 - 3)/2};
+  % Línea vertical en x=pi/4
+  \addplot[dashed, red] coordinates {(0.7854,-2) (0.7854,1)};
+  % Línea horizontal en g(pi/4)
+  \addplot[dashed, green] coordinates {(-2,-0.9496) (2,-0.9496)};
+  \node at (axis cs:0.9,-1.2) {\small \(\bigl|g(\tfrac\pi4)\bigr|\approx0.9496\)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+
+\subsection*{d) Código Python}
+
+
+\begin{tcolorbox}[title=Codigo python,
+                  colback=white,
+                  colframe=black,
+                  breakable, enhanced]
+\begin{lstlisting}[style=mypython]
+
+import numpy as np
+import matplotlib.pyplot as plt
+from tabulate import tabulate
+
+def f(x):
+    """Función original: f(x) = x³ + x² - 2x - 3"""
+    return x**3 + x**2 - 2*x - 3
+
+def g(x):
+    """Función de punto fijo: g(x) = (x³ + x² - 3)/2"""
+    return (x**3 + x**2 - 3) / 2
+
+def evaluar_funcion_en_punto():
+    """Evalúa g(x) en x = π/4 y muestra resultados"""
+    x_val = np.pi / 4
+    gx = g(x_val)
+    
+    print("\n" + "="*50)
+    print("EVALUACIÓN DE g(x) EN x = π/4".center(50))
+    print("="*50)
+    print(f"Valor de x: {x_val:.6f}")
+    print(f"g({x_val:.4f}) = {gx:.6f}")
+    print(f"|g({x_val:.4f})| = {abs(gx):.6f}")
+    print("="*50 + "\n")
+    
+    return x_val, gx
+
+def graficar_funcion():
+    """Grafica la función g(x) en el intervalo [-2, 2]"""
+    x = np.linspace(-2, 2, 400)
+    y = g(x)
+    x_val, gx = evaluar_funcion_en_punto()
+    
+    plt.figure(figsize=(12, 6))
+    plt.plot(x, y, label=r'$g(x) = \frac{x^3 + x^2 - 3}{2}$', linewidth=2)
+    
+    # Líneas de referencia
+    plt.axhline(0, color='black', linewidth=0.5)
+    plt.axvline(x_val, color='red', linestyle='--', alpha=0.7, label=r'$x = \pi/4$')
+    plt.axhline(gx, color='green', linestyle='--', alpha=0.7, label=r'$g(\pi/4)$')
+    
+    # Punto evaluado
+    plt.scatter([x_val], [gx], color='purple', s=100, zorder=5, 
+                label=f'Punto ($\pi$/4, {gx:.2f})')
+    
+    plt.title("Gráfica de la función de punto fijo g(x)")
+    plt.xlabel("x")
+    plt.ylabel("g(x)")
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+def metodo_punto_fijo(g, x0, tol=1e-6, max_iter=100):
+    """
+    Implementa el método de punto fijo para encontrar raíces
+    
+    Parámetros:
+    g: función de contracción
+    x0: aproximación inicial
+    tol: tolerancia
+    max_iter: máximo de iteraciones
+    
+    Retorna:
+    dict: resultados del método
+    """
+    historial = []
+    x = x0
+    
+    print("\n" + "="*50)
+    print("MÉTODO DE PUNTO FIJO".center(50))
+    print("="*50)
+    print("Iter\t x_n\t\t g(x_n)\t\t Error")
+    print("-"*50)
+    
+    for i in range(max_iter):
+        x_new = g(x)
+        error = abs(x_new - x)
+        historial.append([i+1, x, x_new, error])
+        
+        print(f"{i+1}\t{x:.8f}\t{x_new:.8f}\t{error:.8f}")
+        
+        if error < tol:
+            break
+            
+        x = x_new
+    
+    return {
+        'raiz': x_new,
+        'error': error,
+        'iteraciones': i+1,
+        'historial': historial
+    }
+
+def analizar_convergencia():
+    """Analiza la convergencia del método de punto fijo"""
+    # Evaluar en π/4
+    x_val, gx = evaluar_funcion_en_punto()
+    
+    # Graficar función
+    graficar_funcion()
+    
+    # Aplicar método de punto fijo
+    resultados = metodo_punto_fijo(g, x0=1.0)
+    
+    # Mostrar tabla de resultados
+    print("\n" + "="*50)
+    print("RESULTADOS FINALES".center(50))
+    print("="*50)
+    print(f"Raíz aproximada: {resultados['raiz']:.8f}")
+    print(f"Iteraciones realizadas: {resultados['iteraciones']}")
+    print(f"Error final: {resultados['error']:.8f}")
+    print("="*50)
+    
+    # Mostrar tabla completa
+    print("\nTABLA DE ITERACIONES COMPLETA")
+    print(tabulate(resultados['historial'], 
+                 headers=["Iter", "x_n", "g(x_n)", "Error"], 
+                 tablefmt="grid", floatfmt=".8f"))
+
+if __name__ == "__main__":
+    analizar_convergencia()
+\end{lstlisting}
+\end{tcolorbox}
+
+
+\section*{Ejercicio: \(f(x) = 4 - x^2 + \cos(10x)\)}
+
+\subsection*{a) Intervalo que contiene la menor raíz positiva}
+
+Graficamos \(f(x)\) para identificación visual:
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    title={$f(x) = 4 - x^2 + \cos(10x)$},
+    xlabel={$x$}, ylabel={$f(x)$},
+    domain=0:2, samples=200,
+    axis lines=middle, grid=both,
+    width=12cm, height=8cm
+]
+  \addplot[blue, thick] {4 - x^2 + cos(deg(10*x))};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Por inspección, la menor raíz positiva está en
+\[
+\boxed{[0.6,\,0.8]}.
+\]
+
+\subsection*{b) Método de Newton–Raphson}
+
+Derivada:
+\[
+f'(x) = -2x - 10\sin(10x).
+\]
+Iteración:
+\[
+x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}.
+\]
+
+\subsection*{c) Iteraciones (5 pasos)}
+
+Tomamos \(x_0 = 0.7\).  
+
+\begin{align*}
+\textbf{Iteración 0:}\\
+&f(0.7) = 4 - 0.49 + \cos(7) \approx 3.51 + 0.7539 = 4.2639,\\
+&f'(0.7) = -1.4 -10\sin(7)\approx -1.4 - 6.5699 = -7.9699,\\
+&x_1 = 0.7 - \frac{4.2639}{-7.9699} \approx 1.2347.\\[0.5em]
+\textbf{Iteración 1:}\\
+&f(1.2347) \approx 4 -1.524 + \cos(12.347)\approx 2.476 + 0.2400 = 2.7160,\\
+&f'(1.2347)\approx -2.4694 -10\sin(12.347)\approx -2.4694 - 10(-0.5739)=5.2696,\\
+&x_2 = 1.2347 - \frac{2.7160}{5.2696}\approx 0.7126.\\[0.5em]
+\textbf{Iteración 2:}\\
+&f(0.7126) \approx 4 -0.508 + \cos(7.126)\approx 3.492 + 0.6189=4.1109,\\
+&f'(0.7126)\approx -1.4252 - 10\sin(7.126)\approx -1.4252 -10(0.7837)=-9.2622,\\
+&x_3 = 0.7126 - \frac{4.1109}{-9.2622}\approx 1.1585.\\[0.5em]
+\textbf{Iteración 3:}\\
+&f(1.1585)\approx 4 -1.342 + \cos(11.585)\approx 2.658 + 0.9999=3.6579,\\
+&f'(1.1585)\approx -2.3170 -10\sin(11.585)\approx -2.3170 -10(-0.0055)=-2.2620,\\
+&x_4 = 1.1585 - \frac{3.6579}{-2.2620}\approx 2.7910.
+\end{align*}
+
+\subsection*{Resumen de iteraciones}
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+Iteración & \(x_n\)   \\ \hline
+\(x_0\)   & 0.7000    \\
+\(x_1\)   & 1.2347    \\
+\(x_2\)   & 0.7126    \\
+\(x_3\)   & 1.1585    \\
+\(x_4\)   & 2.7910    \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection*{Código Python}
+
+\begin{tcolorbox}[title=Codigo python,
+                  colback=white,
+                  colframe=black,
+                  breakable, enhanced]
+\begin{lstlisting}[style=mypython]
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Definimos la función y su derivada
+def f(x):
+    return 4 - x**2 + np.cos(10*x)
+
+def df(x):
+    return -2*x - 10*np.sin(10*x)
+
+# Punto inicial
+x0 = 0.7
+x_vals = [x0]  # Guardamos los xn
+
+# Iteraciones del método de Newton
+for i in range(5):
+    fx = f(x0)
+    dfx = df(x0)
+    x1 = x0 - fx / dfx
+    print(f"Iteración {i}: x = {x0:.6f}, f(x) = {fx:.6f}, f'(x) = {dfx:.6f}, x_new = {x1:.6f}")
+    x_vals.append(x1)
+    x0 = x1
+
+# Gráfica de la función
+x = np.linspace(0, 2, 1000)
+y = f(x)
+
+plt.figure(figsize=(10, 6))
+plt.plot(x, y, label=r"$f(x) = 4 - x^2 + \cos(10x)$", color='blue')
+plt.axhline(0, color='black', linewidth=0.8)
+
+# Puntos de iteración sobre la curva
+xn_array = np.array(x_vals)
+plt.plot(xn_array, f(xn_array), 'ro-', label="Iteraciones Newton")
+
+ # Opciones gráficas
+plt.title("Método de Newton aplicado a $f(x) = 4 - x^2 + \cos(10x)$")
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.grid(True)
+plt.legend()
+plt.xlim(0, 2)
+plt.ylim(-2, 5)
+
+plt.show()
+
+\end{lstlisting}
+\end{tcolorbox}
+
+
+\end{center}
+\end{document}
+
+
+
+
+
+

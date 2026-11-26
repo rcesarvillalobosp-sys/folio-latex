@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TeXLocal</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/dialog/dialog.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ Lista de proyectos ============ -->
+<section id="home" class="view">
+  <header class="topbar">
+    <div class="brand"><span class="logo">TeX</span>Local</div>
+    <div class="spacer"></div>
+    <span id="engineStatus" class="muted small"></span>
+  </header>
+  <main class="home-main">
+    <div class="home-head">
+      <h1>Tus proyectos</h1>
+      <div class="row">
+        <input id="newName" placeholder="Nombre del proyecto nuevo">
+        <select id="newTemplate">
+          <option value="article">Artículo (BibTeX + natbib + secciones)</option>
+          <option value="biblatex">Artículo (biblatex + biber, APA)</option>
+          <option value="report">Informe / tesis (capítulos)</option>
+          <option value="beamer">Presentación (beamer)</option>
+          <option value="blank">En blanco</option>
+        </select>
+        <button id="createBtn" class="primary">Nuevo proyecto</button>
+      </div>
+    </div>
+    <div id="noEngine" class="notice hidden"></div>
+    <table class="projects">
+      <thead><tr><th>Nombre</th><th>Última modificación</th><th></th></tr></thead>
+      <tbody id="projectList"></tbody>
+    </table>
+  </main>
+</section>
+
+<!-- ============ Editor ============ -->
+<section id="editor" class="view hidden">
+  <header class="topbar">
+    <button id="backBtn" class="ghost" title="Volver a proyectos">◀</button>
+    <div class="brand"><span class="logo">TeX</span>Local</div>
+    <strong id="projName" class="projname"></strong>
+    <div class="spacer"></div>
+    <label class="small">Principal <select id="mainSelect"></select></label>
+    <label class="small">Motor <select id="engineSelect"></select></label>
+    <label class="small chk"><input type="checkbox" id="autoCompile"> Auto</label>
+    <button id="compileBtn" class="primary" title="Ctrl+Enter / Ctrl+S">▶ Compilar</button>
+    <button id="downloadBtn" class="ghost" title="Descargar PDF">⬇ PDF</button>
+    <button id="revealBtn" class="ghost" title="Abrir carpeta del proyecto">📁</button>
+  </header>
+
+  <div class="workspace" id="workspace">
+    <!-- Barra lateral -->
+    <aside class="sidebar" id="sidebar">
+      <div class="side-head">
+        <span>Archivos</span>
+        <div>
+          <button class="icon" id="newFileBtn" title="Nuevo archivo">＋📄</button>
+          <button class="icon" id="newFolderBtn" title="Nueva carpeta">＋📁</button>
+          <button class="icon" id="uploadBtn" title="Subir archivos">⬆</button>
+          <input type="file" id="uploadInput" multiple hidden>
+        </div>
+      </div>
+      <div id="fileTree" class="tree"></div>
+      <div class="side-head"><span>Esquema</span></div>
+      <div id="outline" class="outline"></div>
+    </aside>
+    <div class="gutter" data-for="sidebar"></div>
+
+    <!-- Editor de código -->
+    <div class="pane code-pane" id="codePane">
+      <div class="toolbar" id="formatBar">
+        <span id="currentFile" class="cur-file"></span>
+        <span class="dirty hidden" id="dirtyMark">●</span>
+        <div class="spacer"></div>
+        <button data-wrap="\textbf{|}" title="Negrita (Ctrl+B)"><b>B</b></button>
+        <button data-wrap="\textit{|}" title="Cursiva (Ctrl+I)"><i>I</i></button>
+        <button data-wrap="\underline{|}" title="Subrayado"><u>U</u></button>
+        <button data-wrap="$|$" title="Matemáticas en línea">$x$</button>
+        <button data-snippet="section" title="Sección">§</button>
+        <button data-snippet="itemize" title="Lista">•≡</button>
+        <button data-snippet="enumerate" title="Lista numerada">1≡</button>
+        <button data-snippet="equation" title="Ecuación numerada">∑</button>
+        <button data-snippet="figure" title="Figura">🖼</button>
+        <button data-snippet="table" title="Tabla">▦</button>
+        <button data-wrap="\cite{|}" title="Cita (autocompleta claves .bib)">[1]</button>
+        <button data-wrap="\cref{|}" title="Referencia cruzada (autocompleta \label)">→ref</button>
+        <button data-snippet="footnote" title="Nota al pie">¹</button>
+        <button id="findBtn" title="Buscar / reemplazar (Ctrl+F / Ctrl+H)">🔍</button>
+      </div>
+      <div id="cm" class="cm-host"></div>
+      <div id="imgPreview" class="img-preview hidden"></div>
+    </div>
+    <div class="gutter" data-for="codePane"></div>
+
+    <!-- Salida -->
+    <div class="pane out-pane" id="outPane">
+      <div class="toolbar">
+        <button class="tab active" data-tab="pdf">PDF</button>
+        <button class="tab" data-tab="issues">Errores y avisos <span id="issueCount" class="badge"></span></button>
+        <button class="tab" data-tab="log">Log completo</button>
+        <div class="spacer"></div>
+        <span id="compileStatus" class="small muted"></span>
+        <button id="cleanBtn" class="ghost small" title="Borrar archivos auxiliares (.aux, .bbl…)">🧹</button>
+      </div>
+      <div class="tabbody" id="tab-pdf"><iframe id="pdfFrame" title="PDF"></iframe><div id="pdfEmpty" class="empty">Compila para ver el PDF</div></div>
+      <div class="tabbody hidden" id="tab-issues"><div id="issues"></div></div>
+      <div class="tabbody hidden" id="tab-log"><pre id="log"></pre></div>
+    </div>
+  </div>
+</section>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/stex/stex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/dialog/dialog.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/searchcursor.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/search.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/jump-to-line.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/comment/comment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/brace-fold.min.js"></script>
+<script src="latex-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
