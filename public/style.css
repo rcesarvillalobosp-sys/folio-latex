@@ -12,7 +12,7 @@
 }
 * { box-sizing: border-box; }
 html, body { height: 100%; margin: 0; }
-body { background: var(--bg); color: var(--text); font: 14px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+body { background: var(--bg); color: var(--text); font: 14px/1.4 "Fira Sans", system-ui, sans-serif; }
 button, select, input { font: inherit; color: inherit; }
 button { cursor: pointer; border: 1px solid var(--border); background: var(--panel2); border-radius: 6px; padding: 4px 10px; }
 button:hover { filter: brightness(1.05); }
@@ -114,3 +114,15 @@ select, input { background: var(--panel); border: 1px solid var(--border); borde
   .projects td.act button { margin: 2px; }
   .projects th:nth-child(2), .projects td:nth-child(2) { display: none; }
 }
+
+/* --- Identidad de libro compuesto: encabezado de página, versalitas, Garamond --- */
+:root { --serif: "EB Garamond", "Latin Modern Roman", Georgia, serif; }
+button, select, input, .projects, .notice { border-radius: 2px; }
+.topbar { border-bottom: 3px double var(--text); padding: 8px 14px; }
+.running { font: italic 500 17px/1 var(--serif); }
+.running-c { font: 500 14px/1 var(--serif); font-variant: small-caps; letter-spacing: .12em; color: var(--muted); }
+.projname { font: 600 18px/1 var(--serif); margin-left: 4px; }
+.home-main h1 { font: 500 40px/1.05 var(--serif); letter-spacing: -.01em; }
+button.primary { font-variant: small-caps; letter-spacing: .06em; }
+.colofon { margin: 48px 0 8px; text-align: center; font: italic 15px/1.4 var(--serif); color: var(--muted); }
+.colofon::before { content: "❧"; display: block; font-style: normal; font-size: 22px; margin-bottom: 6px; color: var(--accent); }

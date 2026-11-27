@@ -9,6 +9,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/dialog/dialog.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;1,500&family=Fira+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,7 +19,9 @@
 <!-- ============ Lista de proyectos ============ -->
 <section id="home" class="view">
   <header class="topbar">
-    <div class="brand"><span class="logo">F</span>olio</div>
+    <span class="running">Tus proyectos</span>
+    <div class="spacer"></div>
+    <span class="running-c">folio · editor de LaTeX</span>
     <div class="spacer"></div>
     <span id="engineStatus" class="muted small"></span>
   </header>
@@ -40,6 +45,7 @@
       <thead><tr><th>Nombre</th><th>Última modificación</th><th></th></tr></thead>
       <tbody id="projectList"></tbody>
     </table>
+    <p class="colofon">Compuesto con <i>Folio</i> sobre el motor TeX de este equipo.</p>
   </main>
 </section>
 
@@ -47,7 +53,6 @@
 <section id="editor" class="view hidden">
   <header class="topbar">
     <button id="backBtn" class="ghost" title="Volver a proyectos">◀</button>
-    <div class="brand"><span class="logo">F</span>olio</div>
     <strong id="projName" class="projname"></strong>
     <div class="spacer"></div>
     <label class="small">Principal <select id="mainSelect"></select></label>
